@@ -1,0 +1,24 @@
+{
+  "name": "tornikegomareli-blog",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "bun run src/build.ts",
+    "dev": "bun run --watch src/server.ts",
+    "serve": "bun run src/server.ts",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "validate": "biome check ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "latest",
+    "bun-types": "latest"
+  },
+  "dependencies": {
+    "elysia": "^1.1.28",
+    "@elysiajs/static": "^1.1.1",
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.4"
+  }
+}

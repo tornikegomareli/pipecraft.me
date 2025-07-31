@@ -89,6 +89,6 @@ const app = new Elysia()
       headers: { "Content-Type": "text/html; charset=utf-8" },
     });
   })
-  .listen(3000);
+  .listen(process.env.PORT || 3000);
 
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);

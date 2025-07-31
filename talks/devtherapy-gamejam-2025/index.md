@@ -1,6 +1,6 @@
 ---
 title: How to land a Job in 2025 (Devtherapy GameJam 2025)
-date: '2025-01-25'
+date: '2025-07-05'
 spoiler: Tips and strategies for landing a tech job in 2025
 ---
 

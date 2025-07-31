@@ -88,9 +88,46 @@ export function generateHtmlLayout(title: string, content: string): string {
 </html>`;
 }
 
-export function generateIndexContent(postsBySection: Record<Section, Post[]>, githubRepos: GitHubRepo[]): string {
+export function generateIndexContent(
+  postsBySection: Record<Section, Post[]>,
+  githubRepos: GitHubRepo[],
+): string {
   const leftColumnSections = ["posts"];
   const rightColumnSections = ["projects", "talks"];
+
+  const generateNewsletterSection = () => {
+    return `
+      <div class="section">
+        <h2>Newsletter - Bit by Bit</h2>
+        <div class="newsletter-content">
+          <p style="margin-bottom: 1em;">Interesting & Technical things which was farming my mind during the week.</p>
+          <div style="margin-bottom: 1em;">
+            <a href="https://tornikegomareli.substack.com/" target="_blank" rel="noopener noreferrer" style="background: #EB5B00; color: white; padding: 8px 16px; text-decoration: none; display: inline-block;">Subscribe</a>
+          </div>
+          <div class="post-list">
+            <div class="post-item">Jul 28, 2025 - <a href="https://tornikegomareli.substack.com/p/bit-by-bit-1" target="_blank" rel="noopener noreferrer">Bit by Bit #1</a></div>
+          </div>
+        </div>
+      </div>
+    `;
+  };
+
+  const generatePodcastSection = () => {
+    return `
+      <div class="section">
+        <h2>Devtherapy Podcast</h2>
+        <div class="podcast-content">
+          <p style="margin-bottom: 1em;">A podcast about deep engineering talks, career growth, engineering stories.</p>
+          <div style="margin-bottom: 1em;">
+            <a href="https://www.youtube.com/@Devtherapy" target="_blank" rel="noopener noreferrer" style="background: #EB5B00; color: white; padding: 8px 16px; text-decoration: none; display: inline-block;">Subscribe on YouTube</a>
+          </div>
+          <div style="margin-bottom: 1em;">
+            <a href="https://devtherapy.ge/" target="_blank" rel="noopener noreferrer">Visit Website</a>
+          </div>
+        </div>
+      </div>
+    `;
+  };
 
   const generateSectionHtml = (section: Section) => {
     // Special handling for projects section
@@ -100,7 +137,10 @@ export function generateIndexContent(postsBySection: Record<Section, Post[]>, gi
           ? `<p class="empty-section">No projects yet.</p>`
           : githubRepos
               .map((repo) => {
-                const stars = repo.stargazers_count > 0 ? ` ⭐ ${repo.stargazers_count}` : "";
+                const stars =
+                  repo.stargazers_count > 0
+                    ? ` ⭐ ${repo.stargazers_count}`
+                    : "";
                 const lang = repo.language ? ` · ${repo.language}` : "";
                 return `
                 <div class="post-item">
@@ -149,8 +189,14 @@ export function generateIndexContent(postsBySection: Record<Section, Post[]>, gi
     `;
   };
 
-  const leftColumn = leftColumnSections.map((s) => generateSectionHtml(s as Section)).join("");
-  const rightColumn = rightColumnSections.map((s) => generateSectionHtml(s as Section)).join("");
+  const leftColumn =
+    generateNewsletterSection() +
+    leftColumnSections.map((s) => generateSectionHtml(s as Section)).join("");
+  const rightColumn = 
+    generatePodcastSection() +
+    rightColumnSections
+      .map((s) => generateSectionHtml(s as Section))
+      .join("");
 
   return `
     <div class="content-wrapper">
@@ -171,11 +217,14 @@ export function generatePostContent(post: Post): string {
     </div>
     <article>
         <h1>${post.title}</h1>
-        <div class="post-meta">${new Date(post.date).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}</div>
+        <div class="post-meta">${new Date(post.date).toLocaleDateString(
+          "en-US",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          },
+        )}</div>
         ${post.content}
     </article>
   `;

@@ -88,10 +88,7 @@ export function generateHtmlLayout(title: string, content: string): string {
 </html>`;
 }
 
-export function generateIndexContent(
-  postsBySection: Record<Section, Post[]>,
-  githubRepos: GitHubRepo[],
-): string {
+export function generateIndexContent(postsBySection: Record<Section, Post[]>, githubRepos: GitHubRepo[]): string {
   const leftColumnSections = ["posts"];
   const rightColumnSections = ["projects", "talks"];
 
@@ -137,10 +134,7 @@ export function generateIndexContent(
           ? `<p class="empty-section">No projects yet.</p>`
           : githubRepos
               .map((repo) => {
-                const stars =
-                  repo.stargazers_count > 0
-                    ? ` ⭐ ${repo.stargazers_count}`
-                    : "";
+                const stars = repo.stargazers_count > 0 ? ` ⭐ ${repo.stargazers_count}` : "";
                 const lang = repo.language ? ` · ${repo.language}` : "";
                 return `
                 <div class="post-item">
@@ -190,13 +184,9 @@ export function generateIndexContent(
   };
 
   const leftColumn =
-    generateNewsletterSection() +
-    leftColumnSections.map((s) => generateSectionHtml(s as Section)).join("");
-  const rightColumn = 
-    generatePodcastSection() +
-    rightColumnSections
-      .map((s) => generateSectionHtml(s as Section))
-      .join("");
+    generateNewsletterSection() + leftColumnSections.map((s) => generateSectionHtml(s as Section)).join("");
+  const rightColumn =
+    generatePodcastSection() + rightColumnSections.map((s) => generateSectionHtml(s as Section)).join("");
 
   return `
     <div class="content-wrapper">
@@ -217,14 +207,11 @@ export function generatePostContent(post: Post): string {
     </div>
     <article>
         <h1>${post.title}</h1>
-        <div class="post-meta">${new Date(post.date).toLocaleDateString(
-          "en-US",
-          {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          },
-        )}</div>
+        <div class="post-meta">${new Date(post.date).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}</div>
         ${post.content}
     </article>
   `;

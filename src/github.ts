@@ -9,6 +9,17 @@ export interface GitHubRepo {
   updated_at: string;
 }
 
+interface GraphQLRepo {
+  name: string;
+  description: string | null;
+  url: string;
+  stargazerCount: number;
+  primaryLanguage: {
+    name: string;
+  } | null;
+  updatedAt: string;
+}
+
 let cachedRepos: GitHubRepo[] | null = null;
 let lastFetched = 0;
 const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
@@ -23,7 +34,7 @@ export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
 
   try {
     const username = SITE_CONFIG.links.github;
-    
+
     // Use GitHub GraphQL API to fetch pinned repositories
     const query = `
       query {
@@ -62,16 +73,16 @@ export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
     }
 
     const data = await response.json();
-    
+
     if (data.errors) {
       console.error("GitHub GraphQL errors:", data.errors);
       return [];
     }
 
-    const pinnedRepos = data.data?.user?.pinnedItems?.nodes || [];
-    
+    const pinnedRepos: GraphQLRepo[] = data.data?.user?.pinnedItems?.nodes || [];
+
     // Transform GraphQL response to match our interface
-    cachedRepos = pinnedRepos.map((repo: any) => ({
+    cachedRepos = pinnedRepos.map((repo: GraphQLRepo) => ({
       name: repo.name,
       description: repo.description,
       html_url: repo.url,

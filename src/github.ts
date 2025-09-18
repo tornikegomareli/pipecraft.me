@@ -9,20 +9,18 @@ export interface GitHubRepo {
   updated_at: string;
 }
 
-interface GraphQLRepo {
-  name: string;
-  description: string | null;
-  url: string;
-  stargazerCount: number;
-  primaryLanguage: {
-    name: string;
-  } | null;
-  updatedAt: string;
-}
-
 let cachedRepos: GitHubRepo[] | null = null;
 let lastFetched = 0;
 const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
+
+const PINNED_REPOS = [
+  "gitdiff",
+  "swiftlings",
+  "swift-lru-cache",
+  "DeepSwiftSeek",
+  "Overlayer",
+  "macos-tools-mcp-server",
+];
 
 export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
   const now = Date.now();
@@ -34,64 +32,35 @@ export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
 
   try {
     const username = SITE_CONFIG.links.github;
+    const repos: GitHubRepo[] = [];
 
-    // Use GitHub GraphQL API to fetch pinned repositories
-    const query = `
-      query {
-        user(login: "${username}") {
-          pinnedItems(first: ${limit}, types: REPOSITORY) {
-            nodes {
-              ... on Repository {
-                name
-                description
-                url
-                stargazerCount
-                primaryLanguage {
-                  name
-                }
-                updatedAt
-              }
-            }
+    // Fetch each repository individually using REST API
+    for (const repoName of PINNED_REPOS.slice(0, limit)) {
+      try {
+        const response = await fetch(
+          `https://api.github.com/repos/${username}/${repoName}`,
+          {
+            headers: {
+              Accept: "application/vnd.github.v3+json",
+              "User-Agent": "tornikegomareli-blog",
+            },
           }
+        );
+
+        if (response.ok) {
+          const repo: GitHubRepo = await response.json();
+          repos.push(repo);
+        } else {
+          console.warn(`Could not fetch repo ${repoName}:`, response.statusText);
         }
+      } catch (err) {
+        console.error(`Error fetching ${repoName}:`, err);
       }
-    `;
-
-    const response = await fetch("https://api.github.com/graphql", {
-      method: "POST",
-      headers: {
-        Accept: "application/vnd.github.v3+json",
-        "User-Agent": "tornikegomareli-blog",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query }),
-    });
-
-    if (!response.ok) {
-      console.error("GitHub API response error:", response.statusText);
-      return [];
     }
 
-    const data = await response.json();
-
-    if (data.errors) {
-      console.error("GitHub GraphQL errors:", data.errors);
-      return [];
-    }
-
-    const pinnedRepos: GraphQLRepo[] = data.data?.user?.pinnedItems?.nodes || [];
-
-    // Transform GraphQL response to match our interface
-    cachedRepos = pinnedRepos.map((repo: GraphQLRepo) => ({
-      name: repo.name,
-      description: repo.description,
-      html_url: repo.url,
-      stargazers_count: repo.stargazerCount,
-      language: repo.primaryLanguage?.name || null,
-      updated_at: repo.updatedAt,
-    }));
-
+    cachedRepos = repos;
     lastFetched = now;
+
     return cachedRepos;
   } catch (error) {
     console.error("Error fetching GitHub repositories:", error);

@@ -96,13 +96,6 @@ export function generateIndexContent(postsBySection: Record<Section, Post[]>, gi
           <div style="margin-bottom: 1em;">
             <a href="https://tornikegomareli.substack.com/" target="_blank" rel="noopener noreferrer" style="background: #EB5B00; color: white; padding: 8px 16px; text-decoration: none; display: inline-block;">Subscribe</a>
           </div>
-          <div class="post-list">
-            <div class="post-item">Sep 15, 2024 - <a href="https://substack.com/@tornikegomareli/p-173613686" target="_blank" rel="noopener noreferrer">Bit by Bit #5</a></div>
-            <div class="post-item">Sep 08, 2024 - <a href="https://substack.com/@tornikegomareli/p-173043112" target="_blank" rel="noopener noreferrer">Bit by Bit #4</a></div>
-            <div class="post-item">Sep 01, 2024 - <a href="https://substack.com/@tornikegomareli/p-172422638" target="_blank" rel="noopener noreferrer">Bit by Bit #3</a></div>
-            <div class="post-item">Aug 04, 2024 - <a href="https://substack.com/home/post/p-170030778" target="_blank" rel="noopener noreferrer">Bit by Bit #2</a></div>
-            <div class="post-item">Jul 28, 2024 - <a href="https://tornikegomareli.substack.com/p/bit-by-bit-1" target="_blank" rel="noopener noreferrer">Bit by Bit #1</a></div>
-          </div>
         </div>
       </div>
     `;

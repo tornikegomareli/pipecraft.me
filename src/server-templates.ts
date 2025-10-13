@@ -37,7 +37,7 @@ export function generateHtmlLayout(title: string, content: string): string {
         a { color: #0000ff; cursor: pointer; }
         a:visited { color: #551a8b; }
         .site-header { margin-bottom: 2em; border-bottom: 1px solid #ddd; padding-bottom: 1em; display: flex; align-items: flex-start; gap: 1em; }
-        .site-header img { width: 80px; height: 80px; border-radius: 4px; }
+        .site-header img { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; }
         .site-header-info { flex: 1; }
         .site-header p { margin: 0.3em 0; }
         .links { font-size: 0.9em; }
@@ -69,7 +69,7 @@ export function generateHtmlLayout(title: string, content: string): string {
 </head>
 <body hx-boost="true">
     <div class="site-header">
-      <img src="/pic.jpeg" alt="${SITE_CONFIG.name}">
+      <img src="/profile.png" alt="${SITE_CONFIG.name}">
       <div class="site-header-info">
         <h1><a href="/">${SITE_CONFIG.name}</a></h1>
         <p>${SITE_CONFIG.title}. ${SITE_CONFIG.description}</p>

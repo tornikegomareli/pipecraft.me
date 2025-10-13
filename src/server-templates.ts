@@ -36,9 +36,7 @@ export function generateHtmlLayout(title: string, content: string): string {
         h3 { font-size: 1.1em; }
         a { color: #0000ff; cursor: pointer; }
         a:visited { color: #551a8b; }
-        .site-header { margin-bottom: 2em; border-bottom: 1px solid #ddd; padding-bottom: 1em; display: flex; align-items: flex-start; gap: 1em; }
-        .site-header img { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; }
-        .site-header-info { flex: 1; }
+        .site-header { margin-bottom: 2em; border-bottom: 1px solid #ddd; padding-bottom: 1em; }
         .site-header p { margin: 0.3em 0; }
         .links { font-size: 0.9em; }
         .content-wrapper { display: flex; gap: 4em; }
@@ -69,17 +67,14 @@ export function generateHtmlLayout(title: string, content: string): string {
 </head>
 <body hx-boost="true">
     <div class="site-header">
-      <img src="/profile.png" alt="${SITE_CONFIG.name}">
-      <div class="site-header-info">
-        <h1><a href="/">${SITE_CONFIG.name}</a></h1>
-        <p>${SITE_CONFIG.title}. ${SITE_CONFIG.description}</p>
-        <p class="links">
-          <a href="mailto:${SITE_CONFIG.links.email}">Email</a> |
-          <a href="https://github.com/${SITE_CONFIG.links.github}">GitHub</a> |
-          <a href="https://linkedin.com/in/${SITE_CONFIG.links.linkedin}">LinkedIn</a> |
-          <a href="https://twitter.com/${SITE_CONFIG.links.twitter}">Twitter</a>
-        </p>
-      </div>
+      <h1><a href="/">${SITE_CONFIG.name}</a></h1>
+      <p>${SITE_CONFIG.title}. ${SITE_CONFIG.description}</p>
+      <p class="links">
+        <a href="mailto:${SITE_CONFIG.links.email}">Email</a> |
+        <a href="https://github.com/${SITE_CONFIG.links.github}">GitHub</a> |
+        <a href="https://linkedin.com/in/${SITE_CONFIG.links.linkedin}">LinkedIn</a> |
+        <a href="https://twitter.com/${SITE_CONFIG.links.twitter}">Twitter</a>
+      </p>
     </div>
     <div id="content">
         ${content}

@@ -69,7 +69,7 @@ export function generateHtmlLayout(title: string, content: string): string {
 </head>
 <body hx-boost="true">
     <div class="site-header">
-      <img src="/profile.png" alt="${SITE_CONFIG.name}">
+      <img src="/profile.jpg" alt="${SITE_CONFIG.name}">
       <div class="site-header-info">
         <h1><a href="/">${SITE_CONFIG.name}</a></h1>
         <p>${SITE_CONFIG.title}. ${SITE_CONFIG.description}</p>

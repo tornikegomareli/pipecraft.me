@@ -37,15 +37,12 @@ export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
     // Fetch each repository individually using REST API
     for (const repoName of PINNED_REPOS.slice(0, limit)) {
       try {
-        const response = await fetch(
-          `https://api.github.com/repos/${username}/${repoName}`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-              "User-Agent": "tornikegomareli-blog",
-            },
-          }
-        );
+        const response = await fetch(`https://api.github.com/repos/${username}/${repoName}`, {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            "User-Agent": "tornikegomareli-blog",
+          },
+        });
 
         if (response.ok) {
           const repo: GitHubRepo = await response.json();

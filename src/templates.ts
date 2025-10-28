@@ -252,37 +252,6 @@ export function generateLayout(title: string, content: string): string {
         body.dark-theme .github-edit-btn:hover {
             background: #333;
         }
-        .share-buttons {
-            display: flex;
-            gap: 0.8em;
-            flex-wrap: wrap;
-        }
-        .share-btn.twitter-btn {
-            background: #1DA1F2;
-            color: white !important;
-            border-color: #1DA1F2;
-        }
-        .share-btn.twitter-btn:hover {
-            background: #1a8cd8;
-            color: white !important;
-            transform: translateY(-2px);
-        }
-        .share-btn.twitter-btn:visited {
-            color: white !important;
-        }
-        .share-btn.linkedin-btn {
-            background: #0077B5;
-            color: white !important;
-            border-color: #0077B5;
-        }
-        .share-btn.linkedin-btn:hover {
-            background: #006399;
-            color: white !important;
-            transform: translateY(-2px);
-        }
-        .share-btn.linkedin-btn:visited {
-            color: white !important;
-        }
         .header { margin-bottom: 3em; }
         .header a { text-decoration: none; color: inherit; }
         .empty-section {
@@ -396,17 +365,6 @@ export function generatePostPage(post: Post): string {
                 <a href="${githubEditUrl}" target="_blank" rel="noopener noreferrer" class="github-edit-btn">
                     📝 Edit on GitHub
                 </a>
-            </div>
-            <div class="article-footer-section">
-                <h3>Share this article</h3>
-                <div class="share-buttons">
-                    <a href="https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}" target="_blank" rel="noopener noreferrer" class="share-btn twitter-btn">
-                        🐦 Twitter
-                    </a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}" target="_blank" rel="noopener noreferrer" class="share-btn linkedin-btn">
-                        💼 LinkedIn
-                    </a>
-                </div>
             </div>
         </div>
     </article>

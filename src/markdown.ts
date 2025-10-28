@@ -1,9 +1,9 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import matter from "gray-matter";
+import hljs from "highlight.js";
 import { marked } from "marked";
 import { markedHighlight } from "marked-highlight";
-import hljs from "highlight.js";
 import { SECTIONS } from "./config";
 import type { Post, Section } from "./types";
 

@@ -438,7 +438,7 @@ export function generatePostContent(post: Post): string {
   const pageUrl = `https://tornikegomareli.me/${post.section}/${post.slug}`;
   const encodedUrl = encodeURIComponent(pageUrl);
   const encodedTitle = encodeURIComponent(post.title);
-  const githubEditUrl = `https://github.com/${SITE_CONFIG.links.github}/tornikegomareli.me/edit/main/${post.section}/${post.slug}/index.md`;
+  const githubEditUrl = `https://github.com/${SITE_CONFIG.links.github}/pipecraft.me/edit/main/${post.section}/${post.slug}/index.md`;
 
   return `
     <div class="post-navigation">

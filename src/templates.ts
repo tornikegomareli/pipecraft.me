@@ -201,6 +201,80 @@ export function generateLayout(title: string, content: string): string {
         body.dark-theme article p code {
             background: #2a2a2a;
         }
+        .article-footer {
+            margin-top: 4em;
+            padding-top: 2em;
+            border-top: 2px solid #e0e0e0;
+            display: flex;
+            gap: 3em;
+            flex-wrap: wrap;
+        }
+        body.dark-theme .article-footer {
+            border-top-color: #333;
+        }
+        .article-footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        .article-footer-section h3 {
+            font-size: 1em;
+            margin-top: 0;
+            margin-bottom: 1em;
+            color: #666;
+        }
+        body.dark-theme .article-footer-section h3 {
+            color: #999;
+        }
+        .github-edit-btn, .share-btn {
+            display: inline-block;
+            padding: 0.6em 1.2em;
+            border-radius: 6px;
+            text-decoration: none;
+            font-family: monospace;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            border: 1px solid;
+        }
+        .github-edit-btn {
+            background: #f0f0f0;
+            color: #333;
+            border-color: #ddd;
+        }
+        .github-edit-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        body.dark-theme .github-edit-btn {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+        body.dark-theme .github-edit-btn:hover {
+            background: #333;
+        }
+        .share-buttons {
+            display: flex;
+            gap: 0.8em;
+            flex-wrap: wrap;
+        }
+        .twitter-btn {
+            background: #1DA1F2;
+            color: white;
+            border-color: #1DA1F2;
+        }
+        .twitter-btn:hover {
+            background: #1a8cd8;
+            transform: translateY(-2px);
+        }
+        .linkedin-btn {
+            background: #0077B5;
+            color: white;
+            border-color: #0077B5;
+        }
+        .linkedin-btn:hover {
+            background: #006399;
+            transform: translateY(-2px);
+        }
         .header { margin-bottom: 3em; }
         .header a { text-decoration: none; color: inherit; }
         .empty-section {
@@ -290,6 +364,11 @@ export function generateIndexPage(postsBySection: Record<Section, Post[]>): stri
 }
 
 export function generatePostPage(post: Post): string {
+  const pageUrl = `https://tornikegomareli.me/${post.section}/${post.slug}`;
+  const twitterText = encodeURIComponent(post.title);
+  const linkedInUrl = encodeURIComponent(pageUrl);
+  const githubEditUrl = `https://github.com/${SITE_CONFIG.links.github}/tornikegomareli.me/edit/main/${post.section}/${post.slug}/index.md`;
+
   const content = `
     <button class="theme-toggle" onclick="toggleTheme()" style="position: fixed; top: 20px; right: 20px;">Dark 🌙</button>
     <div class="header">
@@ -303,6 +382,25 @@ export function generatePostPage(post: Post): string {
           day: "numeric",
         })}</div>
         ${post.content}
+        <div class="article-footer">
+            <div class="article-footer-section">
+                <h3>Found a typo or mistake?</h3>
+                <a href="${githubEditUrl}" target="_blank" rel="noopener noreferrer" class="github-edit-btn">
+                    📝 Edit on GitHub
+                </a>
+            </div>
+            <div class="article-footer-section">
+                <h3>Share this article</h3>
+                <div class="share-buttons">
+                    <a href="https://twitter.com/intent/tweet?text=${twitterText}&url=${pageUrl}" target="_blank" rel="noopener noreferrer" class="share-btn twitter-btn">
+                        🐦 Twitter
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=${linkedInUrl}" target="_blank" rel="noopener noreferrer" class="share-btn linkedin-btn">
+                        💼 LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
     </article>
   `;
 

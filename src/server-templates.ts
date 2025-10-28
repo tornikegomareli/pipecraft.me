@@ -12,16 +12,20 @@ export function generateHtmlLayout(title: string, content: string): string {
     <title>${title}</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" id="highlight-light" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css">
+    <link rel="stylesheet" id="highlight-dark" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css" disabled>
     <script src="https://unpkg.com/htmx.org@2.0.3"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('HTMX boost enabled');
 
             const savedTheme = localStorage.getItem('theme') || 'light';
-            if (savedTheme === 'dark') {
+            const isDark = savedTheme === 'dark';
+            if (isDark) {
                 document.body.classList.add('dark-theme');
             }
             updateThemeButton();
+            updateHighlightTheme(isDark);
         });
 
         function toggleTheme() {
@@ -29,6 +33,7 @@ export function generateHtmlLayout(title: string, content: string): string {
             const isDark = body.classList.toggle('dark-theme');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             updateThemeButton();
+            updateHighlightTheme(isDark);
         }
 
         function updateThemeButton() {
@@ -36,6 +41,15 @@ export function generateHtmlLayout(title: string, content: string): string {
             if (button) {
                 const isDark = document.body.classList.contains('dark-theme');
                 button.textContent = isDark ? 'Light ☀️' : 'Dark 🌙';
+            }
+        }
+
+        function updateHighlightTheme(isDark) {
+            const lightTheme = document.getElementById('highlight-light');
+            const darkTheme = document.getElementById('highlight-dark');
+            if (lightTheme && darkTheme) {
+                lightTheme.disabled = isDark;
+                darkTheme.disabled = !isDark;
             }
         }
     </script>

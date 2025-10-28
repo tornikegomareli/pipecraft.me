@@ -2,8 +2,20 @@ import { readFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import { markedHighlight } from "marked-highlight";
+import hljs from "highlight.js";
 import { SECTIONS } from "./config";
 import type { Post, Section } from "./types";
+
+marked.use(
+  markedHighlight({
+    langPrefix: "hljs language-",
+    highlight(code, lang) {
+      const language = hljs.getLanguage(lang) ? lang : "plaintext";
+      return hljs.highlight(code, { language }).value;
+    },
+  }),
+);
 
 export async function getPostsFromSection(section: Section): Promise<Post[]> {
   const sectionPath = join(process.cwd(), SECTIONS[section].path);

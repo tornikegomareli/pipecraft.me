@@ -428,8 +428,8 @@ export function generateIndexContent(postsBySection: Record<Section, Post[]>, gi
 
 export function generatePostContent(post: Post): string {
   const pageUrl = `https://tornikegomareli.me/${post.section}/${post.slug}`;
-  const twitterText = encodeURIComponent(post.title);
-  const linkedInUrl = encodeURIComponent(pageUrl);
+  const encodedUrl = encodeURIComponent(pageUrl);
+  const encodedTitle = encodeURIComponent(post.title);
   const githubEditUrl = `https://github.com/${SITE_CONFIG.links.github}/tornikegomareli.me/edit/main/${post.section}/${post.slug}/index.md`;
 
   return `
@@ -454,10 +454,10 @@ export function generatePostContent(post: Post): string {
             <div class="article-footer-section">
                 <h3>Share this article</h3>
                 <div class="share-buttons">
-                    <a href="https://twitter.com/intent/tweet?text=${twitterText}&url=${pageUrl}" target="_blank" rel="noopener noreferrer" class="share-btn twitter-btn">
+                    <a href="https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}" target="_blank" rel="noopener noreferrer" class="share-btn twitter-btn">
                         🐦 Twitter
                     </a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=${linkedInUrl}" target="_blank" rel="noopener noreferrer" class="share-btn linkedin-btn">
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}" target="_blank" rel="noopener noreferrer" class="share-btn linkedin-btn">
                         💼 LinkedIn
                     </a>
                 </div>

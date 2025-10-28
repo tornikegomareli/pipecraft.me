@@ -262,23 +262,31 @@ export function generateHtmlLayout(title: string, content: string): string {
             gap: 0.8em;
             flex-wrap: wrap;
         }
-        .twitter-btn {
+        .share-btn.twitter-btn {
             background: #1DA1F2;
-            color: white;
+            color: white !important;
             border-color: #1DA1F2;
         }
-        .twitter-btn:hover {
+        .share-btn.twitter-btn:hover {
             background: #1a8cd8;
+            color: white !important;
             transform: translateY(-2px);
         }
-        .linkedin-btn {
+        .share-btn.twitter-btn:visited {
+            color: white !important;
+        }
+        .share-btn.linkedin-btn {
             background: #0077B5;
-            color: white;
+            color: white !important;
             border-color: #0077B5;
         }
-        .linkedin-btn:hover {
+        .share-btn.linkedin-btn:hover {
             background: #006399;
+            color: white !important;
             transform: translateY(-2px);
+        }
+        .share-btn.linkedin-btn:visited {
+            color: white !important;
         }
         .header { margin-bottom: 3em; }
         .header a { text-decoration: none; color: inherit; }

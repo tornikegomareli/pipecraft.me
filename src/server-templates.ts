@@ -55,7 +55,7 @@ export function generateHtmlLayout(title: string, content: string): string {
     </script>
     <style>
         body {
-            font-family: monospace;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             line-height: 1.6;
             max-width: 800px;
             margin: 40px auto;
@@ -68,15 +68,42 @@ export function generateHtmlLayout(title: string, content: string): string {
             background: #1a1a1a;
             color: #e0e0e0;
         }
-        h1, h2, h3 { font-weight: normal; }
-        h1 { font-size: 1.5em; margin: 0; }
-        h2 { font-size: 1.2em; margin-top: 1.5em; margin-bottom: 0.5em; }
-        h3 { font-size: 1.1em; }
+        h1, h2, h3 {
+            font-family: monospace;
+            font-weight: normal;
+            line-height: 1.3;
+        }
+        h1 {
+            font-size: 2em;
+            margin: 0.5em 0 0.3em 0;
+            letter-spacing: -0.02em;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+            padding-top: 0.5em;
+            border-top: 1px solid #e0e0e0;
+        }
+        body.dark-theme h2 {
+            border-top-color: #333;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
         a { color: #0000ff; cursor: pointer; }
         a:visited { color: #551a8b; }
         body.dark-theme a { color: #6b9eff; }
         body.dark-theme a:visited { color: #b58bff; }
-        .site-header { margin-bottom: 2em; border-bottom: 1px solid #ddd; padding-bottom: 1em; position: relative; }
+        .site-header {
+            margin-bottom: 2em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1em;
+            position: relative;
+            font-family: monospace;
+        }
         body.dark-theme .site-header { border-bottom-color: #444; }
         .site-header p { margin: 0.3em 0; }
         .links { font-size: 0.9em; }
@@ -108,23 +135,84 @@ export function generateHtmlLayout(title: string, content: string): string {
         .column { flex: 1; }
         .section { margin-bottom: 2em; }
         .post-list { }
-        .post-item { margin-bottom: 0.3em; font-size: 0.9em; }
-        .post-meta { color: #666; font-size: 0.9em; }
+        .post-item {
+            margin-bottom: 0.3em;
+            font-size: 0.9em;
+            font-family: monospace;
+        }
+        .post-meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 2em;
+            font-family: monospace;
+        }
         body.dark-theme .post-meta { color: #999; }
-        .post-navigation { margin-bottom: 2em; }
+        .post-navigation {
+            margin-bottom: 2em;
+            font-family: monospace;
+        }
+        article {
+            font-size: 1.05em;
+            line-height: 1.75;
+        }
+        article p {
+            margin: 1.2em 0;
+        }
+        article ul, article ol {
+            margin: 1.5em 0;
+            padding-left: 2em;
+        }
+        article li {
+            margin: 0.5em 0;
+        }
+        article blockquote {
+            margin: 1.5em 0;
+            padding: 1em 1.5em;
+            border-left: 3px solid #0000ff;
+            background: #f8f8f8;
+            font-style: italic;
+        }
+        body.dark-theme article blockquote {
+            background: #252525;
+            border-left-color: #6b9eff;
+        }
+        article img {
+            max-width: 100%;
+            height: auto;
+            margin: 2em 0;
+            border-radius: 4px;
+        }
         pre {
             background: #f4f4f4;
-            padding: 1em;
+            padding: 1.2em;
             overflow-x: auto;
+            border-radius: 6px;
+            margin: 1.5em 0;
+            font-size: 0.9em;
+            line-height: 1.5;
         }
         body.dark-theme pre {
             background: #2a2a2a;
         }
-        code { font-family: monospace; }
-        img { max-width: 100%; height: auto; }
+        code {
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+        }
+        article p code {
+            background: #f0f0f0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        body.dark-theme article p code {
+            background: #2a2a2a;
+        }
         .header { margin-bottom: 3em; }
         .header a { text-decoration: none; color: inherit; }
-        .empty-section { color: #666; font-style: italic; }
+        .empty-section {
+            color: #666;
+            font-style: italic;
+            font-family: monospace;
+        }
         body.dark-theme .empty-section { color: #999; }
         .loading { opacity: 0.5; }
         #content { min-height: 400px; }

@@ -9,6 +9,30 @@ export function generateLayout(title: string, content: string): string {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+            updateThemeButton();
+        });
+
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeButton();
+        }
+
+        function updateThemeButton() {
+            const button = document.querySelector('.theme-toggle');
+            if (button) {
+                const isDark = document.body.classList.contains('dark-theme');
+                button.textContent = isDark ? 'Light ☀️' : 'Dark 🌙';
+            }
+        }
+    </script>
     <style>
         body {
             font-family: monospace;
@@ -18,6 +42,11 @@ export function generateLayout(title: string, content: string): string {
             padding: 0 20px;
             background: #fff;
             color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark-theme {
+            background: #1a1a1a;
+            color: #e0e0e0;
         }
         h1, h2, h3 { font-weight: normal; }
         h1 { font-size: 1.5em; margin: 0; }
@@ -25,29 +54,63 @@ export function generateLayout(title: string, content: string): string {
         h3 { font-size: 1.1em; }
         a { color: #0000ff; }
         a:visited { color: #551a8b; }
-        .site-header { margin-bottom: 2em; border-bottom: 1px solid #ddd; padding-bottom: 1em; display: flex; align-items: flex-start; gap: 1em; }
+        body.dark-theme a { color: #6b9eff; }
+        body.dark-theme a:visited { color: #b58bff; }
+        .site-header { margin-bottom: 2em; border-bottom: 1px solid #ddd; padding-bottom: 1em; display: flex; align-items: flex-start; gap: 1em; position: relative; }
+        body.dark-theme .site-header { border-bottom-color: #444; }
         .site-header img { width: 80px; height: 80px; border-radius: 4px; }
         .site-header-info { flex: 1; }
         .site-header p { margin: 0.3em 0; }
         .links { font-size: 0.9em; }
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            border: 1px solid #333;
+            color: #333;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 0.9em;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            background: #f0f0f0;
+        }
+        body.dark-theme .theme-toggle {
+            border-color: #e0e0e0;
+            color: #e0e0e0;
+        }
+        body.dark-theme .theme-toggle:hover {
+            background: #333;
+        }
         .content-wrapper { display: flex; gap: 4em; }
         .column { flex: 1; }
         .section { margin-bottom: 2em; }
         .post-list { }
         .post-item { margin-bottom: 0.3em; font-size: 0.9em; }
         .post-meta { color: #666; font-size: 0.9em; }
+        body.dark-theme .post-meta { color: #999; }
         pre {
             background: #f4f4f4;
             padding: 1em;
             overflow-x: auto;
+        }
+        body.dark-theme pre {
+            background: #2a2a2a;
         }
         code { font-family: monospace; }
         img { max-width: 100%; height: auto; }
         .header { margin-bottom: 3em; }
         .header a { text-decoration: none; color: inherit; }
         .empty-section { color: #666; font-style: italic; }
+        body.dark-theme .empty-section { color: #999; }
         @media (max-width: 768px) {
             .content-wrapper { flex-direction: column; gap: 2em; }
+            .site-header { flex-direction: column; }
+            .theme-toggle { position: static; margin-top: 1em; display: inline-block; }
         }
     </style>
 </head>
@@ -60,6 +123,7 @@ export function generateLayout(title: string, content: string): string {
 export function generateIndexPage(postsBySection: Record<Section, Post[]>): string {
   const headerHtml = `
     <div class="site-header">
+      <button class="theme-toggle" onclick="toggleTheme()">Dark 🌙</button>
       <img src="/pic.jpeg" alt="${SITE_CONFIG.name}">
       <div class="site-header-info">
         <h1>${SITE_CONFIG.name}</h1>
@@ -125,6 +189,7 @@ export function generateIndexPage(postsBySection: Record<Section, Post[]>): stri
 
 export function generatePostPage(post: Post): string {
   const content = `
+    <button class="theme-toggle" onclick="toggleTheme()" style="position: fixed; top: 20px; right: 20px;">Dark 🌙</button>
     <div class="header">
         <a href="/">← Back to index</a>
     </div>

@@ -10,7 +10,7 @@ export interface Post extends PostMetadata {
   section: Section;
 }
 
-export type Section = "posts" | "projects" | "talks";
+export type Section = "posts" | "projects" | "talks" | "essays";
 
 export interface SectionConfig {
   name: string;

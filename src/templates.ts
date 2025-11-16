@@ -291,7 +291,7 @@ export function generateIndexPage(postsBySection: Record<Section, Post[]>): stri
     </div>
   `;
 
-  const leftColumnSections = ["posts"];
+  const leftColumnSections = ["posts", "essays"];
   const rightColumnSections = ["projects", "talks"];
 
   const generateSectionHtml = (section: Section) => {

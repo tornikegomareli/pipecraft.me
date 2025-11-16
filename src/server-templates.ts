@@ -295,7 +295,7 @@ export function generateHtmlLayout(title: string, content: string): string {
 }
 
 export function generateIndexContent(postsBySection: Record<Section, Post[]>, githubRepos: GitHubRepo[]): string {
-  const leftColumnSections = ["posts"];
+  const leftColumnSections = ["posts", "essays"];
   const rightColumnSections = ["projects", "talks"];
 
   const generateNewsletterSection = () => {

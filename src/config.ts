@@ -6,6 +6,11 @@ export const SECTIONS: Record<Section, SectionConfig> = {
     title: "Blog Posts",
     path: "posts",
   },
+  essays: {
+    name: "essays",
+    title: "Essays",
+    path: "essays",
+  },
   projects: {
     name: "projects",
     title: "Projects",

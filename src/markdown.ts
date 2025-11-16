@@ -59,6 +59,7 @@ export async function getPostsFromSection(section: Section): Promise<Post[]> {
 export async function getAllPosts(): Promise<Record<Section, Post[]>> {
   const allPosts: Record<Section, Post[]> = {
     posts: [],
+    essays: [],
     projects: [],
     talks: [],
   };

@@ -1,4 +1,10 @@
-One of the most surprising things about programmers is how little thinking most of them actually do. It’s not that they’re incapable of it. They *can* think. They just don’t want to. And the more time I spend around engineers, the more obvious this becomes.
+---
+title: Cost of Thinking
+date: '2025-11-16'
+spoiler: Why most programmers avoid thinking and how this shapes software culture.
+---
+
+One of the most surprising things about programmers is how little thinking most of them actually do. It's not that they're incapable of it. They *can* think. They just don't want to. And the more time I spend around engineers, the more obvious this becomes.
 
 If you want to understand software, you have to understand this phenomenon first.
 

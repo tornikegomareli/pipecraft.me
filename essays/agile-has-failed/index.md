@@ -1,6 +1,6 @@
 ---
 title: Agile has failed
-date: '2024-09-16'
+date: '2025-09-16'
 spoiler: How the Agile methodology lost its way and became what it sought to replace
 ---
 

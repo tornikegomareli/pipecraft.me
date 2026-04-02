@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
@@ -30,6 +30,6 @@
     "resolveJsonModule": true,
     "types": ["bun-types"]
   },
-  "include": ["src/**/*"],
+  "include": ["client/**/*", "server/**/*"],
   "exclude": ["node_modules", "dist"]
 }

@@ -14,12 +14,12 @@ let lastFetched = 0;
 const CACHE_DURATION = 60 * 60 * 1000;
 
 const PINNED_REPOS = [
+  "swift-pretextkit",
   "gitdiff",
   "swiftlings",
   "swift-lru-cache",
   "instant-swift-sdk",
   "doom-raylib-zig",
-  "Recall",
 ];
 
 export async function getTopRepositories(

@@ -25,9 +25,15 @@ interface Repo {
 
 type PostsBySection = Record<string, PostItem[]>;
 
+interface HomeData {
+  posts: PostsBySection;
+  repos: Repo[];
+}
+
 export default function Home() {
-  const { data: posts, loading } = useFetch<PostsBySection>("/api/posts");
-  const { data: repos } = useFetch<Repo[]>("/api/repos");
+  const { data, loading } = useFetch<HomeData>("/api/home");
+  const posts = data?.posts ?? null;
+  const repos = data?.repos ?? null;
 
   return (
     <div className="layout">

@@ -70,6 +70,26 @@ const app = new Elysia()
   .get("/api/repos", async () => {
     return await getTopRepositories();
   })
+  // Combined endpoint — single request for homepage data
+  .get("/api/home", async () => {
+    const [postsBySection, repos] = await Promise.all([
+      getAllPosts(),
+      getTopRepositories(),
+    ]);
+    const posts: Record<string, unknown[]> = {};
+    for (const [section, items] of Object.entries(postsBySection)) {
+      posts[section] = items.map((p) => ({
+        slug: p.slug,
+        title: p.title,
+        date: p.date,
+        spoiler: p.spoiler,
+        section: p.section,
+        readingTime: p.readingTime,
+        youtubeId: p.youtubeId,
+      }));
+    }
+    return { posts, repos };
+  })
   .onRequest(async ({ request, set }) => {
     const url = new URL(request.url);
     const path = url.pathname;

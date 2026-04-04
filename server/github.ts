@@ -32,26 +32,22 @@ export async function getTopRepositories(
 
   try {
     const username = SITE_CONFIG.links.github;
-    const repos: GitHubRepo[] = [];
 
-    for (const repoName of PINNED_REPOS.slice(0, limit)) {
-      try {
-        const response = await fetch(
-          `https://api.github.com/repos/${username}/${repoName}`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-              "User-Agent": "pipecraft-blog",
-            },
+    // Fetch all repos in parallel instead of sequentially
+    const results = await Promise.allSettled(
+      PINNED_REPOS.slice(0, limit).map((repoName) =>
+        fetch(`https://api.github.com/repos/${username}/${repoName}`, {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            "User-Agent": "pipecraft-blog",
           },
-        );
-        if (response.ok) {
-          repos.push(await response.json());
-        }
-      } catch {
-        // skip failed repos
-      }
-    }
+        }).then((r) => (r.ok ? r.json() : null)),
+      ),
+    );
+
+    const repos = results
+      .map((r) => (r.status === "fulfilled" ? r.value : null))
+      .filter((r): r is GitHubRepo => r !== null);
 
     cachedRepos = repos;
     lastFetched = now;
@@ -60,3 +56,6 @@ export async function getTopRepositories(
     return [];
   }
 }
+
+// Pre-warm the cache at startup
+getTopRepositories();

@@ -1,56 +1,84 @@
 import {
   type ReactNode,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
 } from "react";
 
-type Theme = "light" | "dark";
+type Mode = "light" | "sepia" | "dark";
+type Typography = "serif" | "sans" | "mono";
+type Width = "narrow" | "medium" | "wide";
 
-interface ThemeContextValue {
-  theme: Theme;
-  toggle: () => void;
+export interface Tweaks {
+  mode: Mode;
+  typography: Typography;
+  readingWidth: Width;
+  accentHue: number;
 }
 
-const ThemeContext = createContext<ThemeContextValue>({
-  theme: "light",
-  toggle: () => {},
+interface TweaksContextValue {
+  tweaks: Tweaks;
+  setTweak: <K extends keyof Tweaks>(key: K, value: Tweaks[K]) => void;
+}
+
+const DEFAULTS: Tweaks = {
+  mode: "dark",
+  typography: "mono",
+  readingWidth: "wide",
+  accentHue: 340,
+};
+
+const TweaksContext = createContext<TweaksContextValue>({
+  tweaks: DEFAULTS,
+  setTweak: () => {},
 });
 
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "light";
-  const saved = localStorage.getItem("theme");
-  if (saved === "dark" || saved === "light") return saved;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+function loadTweaks(): Tweaks {
+  if (typeof window === "undefined") return DEFAULTS;
+  try {
+    const raw = localStorage.getItem("tweaks");
+    if (!raw) return DEFAULTS;
+    const parsed = JSON.parse(raw);
+    return { ...DEFAULTS, ...parsed };
+  } catch {
+    return DEFAULTS;
+  }
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const [tweaks, setTweaks] = useState<Tweaks>(loadTweaks);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    const r = document.documentElement;
+    r.setAttribute("data-mode", tweaks.mode);
+    r.setAttribute("data-typography", tweaks.typography);
+    r.setAttribute("data-width", tweaks.readingWidth);
+    r.style.setProperty("--accent-h", String(tweaks.accentHue));
 
-    // Toggle highlight.js stylesheets
-    const isDark = theme === "dark";
-    const lightSheet = document.getElementById("hljs-light") as HTMLLinkElement;
-    const darkSheet = document.getElementById("hljs-dark") as HTMLLinkElement;
+    const isDark = tweaks.mode === "dark";
+    const lightSheet = document.getElementById("hljs-light") as HTMLLinkElement | null;
+    const darkSheet = document.getElementById("hljs-dark") as HTMLLinkElement | null;
     if (lightSheet) lightSheet.disabled = isDark;
     if (darkSheet) darkSheet.disabled = !isDark;
-  }, [theme]);
 
-  const toggle = () => setTheme((t) => (t === "light" ? "dark" : "light"));
+    try {
+      localStorage.setItem("tweaks", JSON.stringify(tweaks));
+    } catch {}
+  }, [tweaks]);
+
+  const setTweak = useCallback<TweaksContextValue["setTweak"]>((k, v) => {
+    setTweaks((prev) => ({ ...prev, [k]: v }));
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggle }}>
+    <TweaksContext.Provider value={{ tweaks, setTweak }}>
       {children}
-    </ThemeContext.Provider>
+    </TweaksContext.Provider>
   );
 }
 
-export function useTheme() {
-  return useContext(ThemeContext);
+export function useTweaks() {
+  return useContext(TweaksContext);
 }

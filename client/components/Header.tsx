@@ -1,83 +1,42 @@
-import { Link } from "react-router-dom";
-import { useTheme } from "../hooks/useTheme";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+const NAV = [
+  { id: "writing", label: "writing", path: "/" },
+  { id: "talks", label: "talks", path: "/talks" },
+  { id: "projects", label: "projects", path: "/projects" },
+  { id: "about", label: "about", path: "/about" },
+] as const;
+
+function activeId(pathname: string): string {
+  if (pathname === "/") return "writing";
+  if (pathname.startsWith("/talks")) return "talks";
+  if (pathname.startsWith("/projects")) return "projects";
+  if (pathname.startsWith("/about")) return "about";
+  if (pathname.startsWith("/essays") || pathname.startsWith("/posts")) return "writing";
+  return "writing";
+}
 
 export default function Header() {
-  const { theme, toggle } = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const active = activeId(location.pathname);
 
   return (
-    <header className="header">
-      <div className="header-inner">
-        <Link to="/" className="header-name">
-          Tornike Gomareli
-        </Link>
-        <nav className="header-nav">
-          <a href="/#talks" className="header-nav-talks">Talks</a>
-          <a href="mailto:tornike.gomareli@gmail.com">Email</a>
+    <div className="topnav">
+      <Link to="/" className="brand">
+        tornike<span className="slash">/</span>gomareli
+      </Link>
+      <nav>
+        {NAV.map((n) => (
           <a
-            href="https://github.com/tornikegomareli"
-            target="_blank"
-            rel="noopener noreferrer"
+            key={n.id}
+            aria-current={active === n.id ? "true" : undefined}
+            onClick={() => navigate(n.path)}
           >
-            GitHub
+            {n.label}
           </a>
-          <a
-            href="https://linkedin.com/in/tornikegomareli"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="https://twitter.com/tornikegomareli"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Twitter
-          </a>
-          <button
-            type="button"
-            className="theme-toggle"
-            onClick={toggle}
-            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-          >
-            {theme === "light" ? (
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            ) : (
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="5" />
-                <line x1="12" y1="1" x2="12" y2="3" />
-                <line x1="12" y1="21" x2="12" y2="23" />
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                <line x1="1" y1="12" x2="3" y2="12" />
-                <line x1="21" y1="12" x2="23" y2="12" />
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              </svg>
-            )}
-          </button>
-        </nav>
-      </div>
-    </header>
+        ))}
+      </nav>
+    </div>
   );
 }

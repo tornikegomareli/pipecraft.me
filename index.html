@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-mode="dark" data-typography="mono" data-width="wide">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,19 +9,31 @@
       rel="stylesheet"
       id="hljs-light"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css"
+      disabled
     />
     <link
       rel="stylesheet"
       id="hljs-dark"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
-      disabled
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <script>
+      (function () {
+        try {
+          var t = JSON.parse(localStorage.getItem("tweaks") || "null") || {};
+          var r = document.documentElement;
+          r.setAttribute("data-mode", t.mode || "dark");
+          r.setAttribute("data-typography", t.typography || "mono");
+          r.setAttribute("data-width", t.readingWidth || "wide");
+          r.style.setProperty("--accent-h", t.accentHue != null ? t.accentHue : 340);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -16,12 +16,7 @@ export default function TweaksPanel() {
 
   return (
     <>
-      <button
-        type="button"
-        className="tweaks-fab"
-        onClick={() => setOpen((o) => !o)}
-        aria-label="Tweaks"
-      >
+      <button type="button" className="tweaks-fab" onClick={() => setOpen((o) => !o)} aria-label="Tweaks">
         <svg
           width="16"
           height="16"
@@ -29,7 +24,10 @@ export default function TweaksPanel() {
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
+          role="img"
+          aria-label="Tweaks"
         >
+          <title>Tweaks</title>
           <circle cx="12" cy="12" r="3" />
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
         </svg>
@@ -37,22 +35,17 @@ export default function TweaksPanel() {
       <div className={`tweaks-panel ${open ? "open" : ""}`}>
         <h4>Tweaks</h4>
         <div className="row">
-          <label>mode</label>
+          <span className="label">mode</span>
           <div className="segment">
             {(["light", "sepia", "dark"] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                aria-pressed={tweaks.mode === m}
-                onClick={() => setTweak("mode", m)}
-              >
+              <button key={m} type="button" aria-pressed={tweaks.mode === m} onClick={() => setTweak("mode", m)}>
                 {m}
               </button>
             ))}
           </div>
         </div>
         <div className="row">
-          <label>typography</label>
+          <span className="label">typography</span>
           <div className="segment">
             {(["serif", "sans", "mono"] as const).map((t) => (
               <button
@@ -67,7 +60,7 @@ export default function TweaksPanel() {
           </div>
         </div>
         <div className="row">
-          <label>reading width</label>
+          <span className="label">reading width</span>
           <div className="segment">
             {(["narrow", "medium", "wide"] as const).map((w) => (
               <button
@@ -82,7 +75,7 @@ export default function TweaksPanel() {
           </div>
         </div>
         <div className="row">
-          <label>accent</label>
+          <span className="label">accent</span>
           <div className="hue-row">
             {HUES.map((h) => (
               <button

@@ -22,10 +22,9 @@ function fmtShort(s: string): string {
 
 export default function Talk() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: post, loading, error } = useFetch<Post>(
-    `/api/posts/talks/${slug}`,
-  );
+  const { data: post, loading, error } = useFetch<Post>(`/api/posts/talks/${slug}`);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-run on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);

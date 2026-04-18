@@ -22,9 +22,7 @@ const PINNED_REPOS = [
   "doom-raylib-zig",
 ];
 
-export async function getTopRepositories(
-  limit = 6,
-): Promise<GitHubRepo[]> {
+export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
   const now = Date.now();
   if (cachedRepos && now - lastFetched < CACHE_DURATION) {
     return cachedRepos;

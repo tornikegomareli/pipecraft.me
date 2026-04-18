@@ -26,9 +26,7 @@ interface FloatImage {
 
 // Detect float directives from the alt attribute set by markdown
 // marked renders ![text|float-right](url) → <img alt="text|float-right" src="url">
-function parseFloatDirective(
-  img: HTMLImageElement,
-): { side: "left" | "right"; caption: string } | null {
+function parseFloatDirective(img: HTMLImageElement): { side: "left" | "right"; caption: string } | null {
   const alt = img.alt || "";
   if (alt.includes("|float-right")) {
     return { side: "right", caption: alt.replace("|float-right", "").trim() };
@@ -159,6 +157,7 @@ export default function PretextArticle({
     }
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-layout when html changes
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -174,7 +173,8 @@ export default function PretextArticle({
       if (cancelled) return;
 
       // Scan for float images
-      const images = container!.querySelectorAll("img");
+      if (!container) return;
+      const images = container.querySelectorAll("img");
       const floats: FloatImage[] = [];
 
       for (const img of images) {
@@ -244,6 +244,7 @@ export default function PretextArticle({
     <div
       ref={containerRef}
       className="article-content prose"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: server-rendered markdown
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

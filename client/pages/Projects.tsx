@@ -22,13 +22,7 @@ export default function Projects() {
       </div>
       <div className="projects-list">
         {repos.map((p) => (
-          <a
-            key={p.name}
-            className="project-row"
-            href={p.html_url}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a key={p.name} className="project-row" href={p.html_url} target="_blank" rel="noreferrer">
             <span>
               <div className="name">{p.name}</div>
               {p.description && <div className="desc">{p.description}</div>}

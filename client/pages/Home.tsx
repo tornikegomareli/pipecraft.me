@@ -52,30 +52,17 @@ export default function Home() {
       <div className="intro">
         <h1>Tornike Gomareli — software engineer</h1>
         <p>
-          Builder, developer evangelist, technical agnostic. I write about
-          concurrency, craft, and learning how to think better. Host of the
-          Devtherapy podcast.
+          Builder, developer evangelist, technical agnostic. I write about concurrency, craft, and learning how to think
+          better. Host of the Devtherapy podcast.
         </p>
         <div className="links">
-          <a
-            href="https://tornikegomareli.substack.com/"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://tornikegomareli.substack.com/" target="_blank" rel="noreferrer">
             newsletter
           </a>
-          <a
-            href="https://www.youtube.com/@Devtherapy"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://www.youtube.com/@Devtherapy" target="_blank" rel="noreferrer">
             devtherapy
           </a>
-          <a
-            href="https://github.com/tornikegomareli"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://github.com/tornikegomareli" target="_blank" rel="noreferrer">
             github
           </a>
           <a href="mailto:tornike.gomareli@gmail.com">email</a>
@@ -90,11 +77,7 @@ export default function Home() {
           </div>
           <div className="entries">
             {essays.map((e) => (
-              <Link
-                key={e.slug}
-                className="entry"
-                to={`/${e.section}/${e.slug}`}
-              >
+              <Link key={e.slug} className="entry" to={`/${e.section}/${e.slug}`}>
                 <span className="date">{fmtShort(e.date)}</span>
                 <span className="title">{e.title}</span>
                 <span className="kind-tag">essay</span>
@@ -112,11 +95,7 @@ export default function Home() {
           </div>
           <div className="entries">
             {blog.map((e) => (
-              <Link
-                key={e.slug}
-                className="entry"
-                to={`/${e.section}/${e.slug}`}
-              >
+              <Link key={e.slug} className="entry" to={`/${e.section}/${e.slug}`}>
                 <span className="date">{fmtShort(e.date)}</span>
                 <span className="title">{e.title}</span>
                 <span className="kind-tag">post</span>
@@ -159,13 +138,7 @@ export default function Home() {
           </div>
           <div className="projects-list">
             {projects.map((p) => (
-              <a
-                key={p.name}
-                className="project-row"
-                href={p.html_url}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a key={p.name} className="project-row" href={p.html_url} target="_blank" rel="noreferrer">
                 <span>
                   <div className="name">{p.name}</div>
                   {p.description && <div className="desc">{p.description}</div>}

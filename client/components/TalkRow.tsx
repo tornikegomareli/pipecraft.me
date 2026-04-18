@@ -16,17 +16,8 @@ function fmtShort(s: string): string {
   return `${m} ${String(d.getDate()).padStart(2, "0")}, ${y}`;
 }
 
-export default function TalkRow({
-  slug,
-  title,
-  date,
-  spoiler,
-  youtubeId,
-  duration,
-}: TalkRowProps) {
-  const thumb = youtubeId
-    ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`
-    : null;
+export default function TalkRow({ slug, title, date, spoiler, youtubeId, duration }: TalkRowProps) {
+  const thumb = youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : null;
 
   return (
     <Link to={`/talks/${slug}`} className="talk-row">
@@ -42,7 +33,8 @@ export default function TalkRow({
           />
         )}
         <span className="play-overlay">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Play">
+            <title>Play</title>
             <polygon points="6,4 20,12 6,20" />
           </svg>
         </span>

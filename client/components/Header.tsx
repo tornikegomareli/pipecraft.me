@@ -28,13 +28,14 @@ export default function Header() {
       </Link>
       <nav>
         {NAV.map((n) => (
-          <a
+          <button
             key={n.id}
+            type="button"
             aria-current={active === n.id ? "true" : undefined}
             onClick={() => navigate(n.path)}
           >
             {n.label}
-          </a>
+          </button>
         ))}
       </nav>
     </div>

@@ -22,11 +22,10 @@ function fmtShort(s: string): string {
 
 export default function Article() {
   const { section, slug } = useParams<{ section: string; slug: string }>();
-  const { data: post, loading, error } = useFetch<Post>(
-    `/api/posts/${section}/${slug}`,
-  );
+  const { data: post, loading, error } = useFetch<Post>(`/api/posts/${section}/${slug}`);
   const [progress, setProgress] = useState(0);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-run on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [section, slug]);
@@ -38,6 +37,7 @@ export default function Article() {
     };
   }, [post]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset listener when article changes
   useEffect(() => {
     const onScroll = () => {
       const h = document.documentElement;

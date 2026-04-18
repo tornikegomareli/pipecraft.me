@@ -1,11 +1,4 @@
-import {
-  type ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { type ReactNode, createContext, useCallback, useContext, useEffect, useState } from "react";
 
 type Mode = "light" | "sepia" | "dark";
 type Typography = "serif" | "sans" | "mono";
@@ -72,11 +65,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setTweaks((prev) => ({ ...prev, [k]: v }));
   }, []);
 
-  return (
-    <TweaksContext.Provider value={{ tweaks, setTweak }}>
-      {children}
-    </TweaksContext.Provider>
-  );
+  return <TweaksContext.Provider value={{ tweaks, setTweak }}>{children}</TweaksContext.Provider>;
 }
 
 export function useTweaks() {

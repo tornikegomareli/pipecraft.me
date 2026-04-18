@@ -27,8 +27,7 @@ export function useFetch<T>(url: string): FetchState<T> {
         if (!cancelled) setState({ data, loading: false, error: null });
       })
       .catch((err) => {
-        if (!cancelled)
-          setState({ data: null, loading: false, error: err.message });
+        if (!cancelled) setState({ data: null, loading: false, error: err.message });
       });
 
     return () => {

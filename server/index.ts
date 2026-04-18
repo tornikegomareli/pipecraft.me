@@ -72,10 +72,7 @@ const app = new Elysia()
   })
   // Combined endpoint — single request for homepage data
   .get("/api/home", async () => {
-    const [postsBySection, repos] = await Promise.all([
-      getAllPosts(),
-      getTopRepositories(),
-    ]);
+    const [postsBySection, repos] = await Promise.all([getAllPosts(), getTopRepositories()]);
     const posts: Record<string, unknown[]> = {};
     for (const [section, items] of Object.entries(postsBySection)) {
       posts[section] = items.map((p) => ({

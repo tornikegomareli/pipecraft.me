@@ -18,9 +18,7 @@ marked.use(
 );
 
 function extractYouTubeId(text: string): string | undefined {
-  const match = text.match(
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
-  );
+  const match = text.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
   return match?.[1];
 }
 
@@ -65,9 +63,7 @@ export async function getPostsFromSection(section: Section): Promise<Post[]> {
     // section directory doesn't exist yet
   }
 
-  return posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
+  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export async function getAllPosts(): Promise<Record<Section, Post[]>> {
@@ -85,10 +81,7 @@ export async function getAllPosts(): Promise<Record<Section, Post[]>> {
   return allPosts;
 }
 
-export async function getPostBySlug(
-  section: Section,
-  slug: string,
-): Promise<Post | null> {
+export async function getPostBySlug(section: Section, slug: string): Promise<Post | null> {
   const posts = await getPostsFromSection(section);
   return posts.find((p) => p.slug === slug) ?? null;
 }

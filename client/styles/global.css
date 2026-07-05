@@ -596,48 +596,6 @@ img {
   }
 }
 
-/* ---------- About ---------- */
-.about .lead {
-  font-size: 14.5px;
-  color: var(--ink);
-  margin-bottom: 20px;
-  line-height: 1.7;
-}
-[data-typography="serif"] .about .lead {
-  font-size: 20px;
-  line-height: 1.55;
-}
-.about p {
-  font-size: 14px;
-  color: var(--ink-2);
-  margin-bottom: 14px;
-  line-height: 1.7;
-  max-width: 60ch;
-}
-.contacts {
-  margin-top: 32px;
-  padding-top: 20px;
-  border-top: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  row-gap: 8px;
-  column-gap: 20px;
-  font-size: 13px;
-}
-.contacts .k {
-  color: var(--ink-4);
-}
-.contacts a {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
-  text-underline-offset: 3px;
-}
-.contacts a:hover {
-  color: var(--accent-ink);
-  text-decoration-color: var(--accent);
-}
-
 /* ---------- Footer ---------- */
 footer.site {
   max-width: calc(var(--reading-width) + 80px);
@@ -817,8 +775,11 @@ footer.site a:hover {
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
 }
 .hero-map {
-  position: absolute;
-  inset: 0;
+  /* !important: maplibre-gl.css sets .maplibregl-map { position: relative } on this
+     same element, and since that stylesheet loads as part of the lazy-loaded map
+     chunk (after global.css), it wins on source order at equal specificity. */
+  position: absolute !important;
+  inset: 0 !important;
 }
 .hero-map .maplibregl-ctrl,
 .hero-map .maplibregl-ctrl-attrib {
@@ -1014,6 +975,11 @@ footer.site a:hover {
   overflow: hidden;
   flex-shrink: 0;
   box-shadow: 0 2px 6px oklch(0 0 0 / 0.25);
+  display: block;
+  transition: transform 0.15s ease;
+}
+.app-icon:hover {
+  transform: translateY(-3px) scale(1.05);
 }
 .app-icon img {
   width: 100%;

@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import TweaksPanel from "./components/TweaksPanel";
 import { ThemeProvider } from "./hooks/useTheme";
-import About from "./pages/About";
 import Article from "./pages/Article";
 import Blog from "./pages/Blog";
 import Essays from "./pages/Essays";
@@ -27,7 +26,6 @@ function Layout() {
           <Route path="/talks" element={<Talks />} />
           <Route path="/talks/:slug" element={<Talk />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/about" element={<About />} />
           <Route path="/:section/:slug" element={<Article />} />
         </Routes>
       </div>

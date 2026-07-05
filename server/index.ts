@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { extname, join } from "node:path";
 import { cors } from "@elysiajs/cors";
 import { Elysia } from "elysia";
-import { getTopRepositories } from "./github";
+import { getContributions, getTopRepositories } from "./github";
 import { getAllPosts, getPostBySlug } from "./markdown";
 import type { Section } from "./types";
 
@@ -70,9 +70,16 @@ const app = new Elysia()
   .get("/api/repos", async () => {
     return await getTopRepositories();
   })
+  .get("/api/contributions", async () => {
+    return await getContributions();
+  })
   // Combined endpoint — single request for homepage data
   .get("/api/home", async () => {
-    const [postsBySection, repos] = await Promise.all([getAllPosts(), getTopRepositories()]);
+    const [postsBySection, repos, contributions] = await Promise.all([
+      getAllPosts(),
+      getTopRepositories(),
+      getContributions(),
+    ]);
     const posts: Record<string, unknown[]> = {};
     for (const [section, items] of Object.entries(postsBySection)) {
       posts[section] = items.map((p) => ({
@@ -85,7 +92,7 @@ const app = new Elysia()
         youtubeId: p.youtubeId,
       }));
     }
-    return { posts, repos };
+    return { posts, repos, contributions };
   })
   .onRequest(async ({ request, set }) => {
     const url = new URL(request.url);

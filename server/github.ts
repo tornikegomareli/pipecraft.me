@@ -5,22 +5,25 @@ export interface GitHubRepo {
   description: string | null;
   html_url: string;
   stargazers_count: number;
+  forks_count: number;
   language: string | null;
   updated_at: string;
+}
+
+export interface ContributionDay {
+  date: string;
+  count: number;
+  level: number;
 }
 
 let cachedRepos: GitHubRepo[] | null = null;
 let lastFetched = 0;
 const CACHE_DURATION = 60 * 60 * 1000;
 
-const PINNED_REPOS = [
-  "swift-pretextkit",
-  "gitdiff",
-  "swiftlings",
-  "swift-lru-cache",
-  "instant-swift-sdk",
-  "doom-raylib-zig",
-];
+let cachedContributions: ContributionDay[] | null = null;
+let contributionsFetchedAt = 0;
+
+const PINNED_REPOS = ["swift-pretextkit", "Aurora", "gitdiff", "doom-raylib-zig", "Xarji", "instant-swift-sdk"];
 
 export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
   const now = Date.now();
@@ -55,5 +58,29 @@ export async function getTopRepositories(limit = 6): Promise<GitHubRepo[]> {
   }
 }
 
+export async function getContributions(): Promise<ContributionDay[]> {
+  const now = Date.now();
+  if (cachedContributions && now - contributionsFetchedAt < CACHE_DURATION) {
+    return cachedContributions;
+  }
+
+  try {
+    const username = SITE_CONFIG.links.github;
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`, {
+      headers: { "User-Agent": "pipecraft-blog" },
+    });
+    if (!res.ok) return cachedContributions || [];
+    const json = await res.json();
+    const days: ContributionDay[] = json.contributions || [];
+
+    cachedContributions = days;
+    contributionsFetchedAt = now;
+    return days;
+  } catch {
+    return cachedContributions || [];
+  }
+}
+
 // Pre-warm the cache at startup
 getTopRepositories();
+getContributions();

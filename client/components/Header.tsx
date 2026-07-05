@@ -1,19 +1,22 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NAV = [
-  { id: "writing", label: "writing", path: "/" },
+  { id: "home", label: "home", path: "/" },
+  { id: "essays", label: "essays", path: "/essays" },
+  { id: "blog", label: "blog", path: "/posts" },
   { id: "talks", label: "talks", path: "/talks" },
   { id: "projects", label: "projects", path: "/projects" },
   { id: "about", label: "about", path: "/about" },
 ] as const;
 
 function activeId(pathname: string): string {
-  if (pathname === "/") return "writing";
+  if (pathname === "/") return "home";
+  if (pathname.startsWith("/essays")) return "essays";
+  if (pathname.startsWith("/posts")) return "blog";
   if (pathname.startsWith("/talks")) return "talks";
   if (pathname.startsWith("/projects")) return "projects";
   if (pathname.startsWith("/about")) return "about";
-  if (pathname.startsWith("/essays") || pathname.startsWith("/posts")) return "writing";
-  return "writing";
+  return "home";
 }
 
 export default function Header() {

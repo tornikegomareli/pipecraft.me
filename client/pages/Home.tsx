@@ -41,6 +41,21 @@ interface HomeData {
   contributions: ContributionDay[];
 }
 
+const PERSONAL_PROJECTS = [
+  {
+    name: "Xarji",
+    tagline: "Self-hosted expense tracker for Georgian banks, reading SMS locally on macOS",
+    url: "https://www.xarji.app/",
+    icon: "/icons/xarji.svg",
+  },
+  {
+    name: "Camus",
+    tagline: "Rewrite text instantly in any Mac app with one keystroke",
+    url: "https://getcamus.app/",
+    icon: "/icons/camus.png",
+  },
+];
+
 const SHIPPED_APPS = [
   {
     name: "Coca-Cola Rewards Georgia",
@@ -247,6 +262,22 @@ export default function Home() {
           @Devtherapy
         </a>
       </div>
+
+      <section className="home-section">
+        <h2>Personal Projects</h2>
+        <p>Products I design, build, and ship entirely on my own, some free, some paid:</p>
+        <div className="personal-projects">
+          {PERSONAL_PROJECTS.map((p) => (
+            <a key={p.name} className="personal-project-card" href={p.url} target="_blank" rel="noreferrer">
+              <img src={p.icon} alt={p.name} className="personal-project-icon" />
+              <div>
+                <div className="personal-project-name">{p.name}</div>
+                <div className="personal-project-tagline">{p.tagline}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
 
       <section className="home-section">
         <h2>Shipped</h2>

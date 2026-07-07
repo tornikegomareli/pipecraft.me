@@ -9,7 +9,7 @@ interface Repo {
 }
 
 export default function Projects() {
-  const { data, loading } = useFetch<Repo[]>("/api/repos");
+  const { data, loading } = useFetch<Repo[]>("/api/projects");
 
   if (loading) return <div className="loading-state">loading...</div>;
   const repos = data || [];
@@ -18,7 +18,7 @@ export default function Projects() {
     <>
       <div className="intro">
         <h1>Projects</h1>
-        <p>Open-source things I&rsquo;ve built or am still breaking.</p>
+        <p>Every public repo of mine with 10+ stars, sorted by stars.</p>
       </div>
       <div className="projects-list">
         {repos.map((p) => (

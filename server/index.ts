@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { extname, join } from "node:path";
 import { cors } from "@elysiajs/cors";
 import { Elysia } from "elysia";
-import { getContributions, getTopRepositories } from "./github";
+import { getContributions, getStarredRepositories, getTopRepositories } from "./github";
 import { getAllPosts, getPostBySlug } from "./markdown";
 import type { Section } from "./types";
 
@@ -69,6 +69,9 @@ const app = new Elysia()
   })
   .get("/api/repos", async () => {
     return await getTopRepositories();
+  })
+  .get("/api/projects", async () => {
+    return await getStarredRepositories();
   })
   .get("/api/contributions", async () => {
     return await getContributions();

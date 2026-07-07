@@ -5,6 +5,7 @@ const NAV = [
   { id: "essays", label: "essays", path: "/essays" },
   { id: "blog", label: "blog", path: "/posts" },
   { id: "talks", label: "talks", path: "/talks" },
+  { id: "oss", label: "OSS", path: "/oss" },
   { id: "projects", label: "projects", path: "/projects" },
 ] as const;
 
@@ -13,6 +14,7 @@ function activeId(pathname: string): string {
   if (pathname.startsWith("/essays")) return "essays";
   if (pathname.startsWith("/posts")) return "blog";
   if (pathname.startsWith("/talks")) return "talks";
+  if (pathname.startsWith("/oss")) return "oss";
   if (pathname.startsWith("/projects")) return "projects";
   return "home";
 }

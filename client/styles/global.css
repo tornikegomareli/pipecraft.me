@@ -992,6 +992,7 @@ footer.site a:hover {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
+  margin-top: 20px;
 }
 .project-card {
   background: var(--paper-2);

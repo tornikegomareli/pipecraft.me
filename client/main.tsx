@@ -9,6 +9,7 @@ import Article from "./pages/Article";
 import Blog from "./pages/Blog";
 import Essays from "./pages/Essays";
 import Home from "./pages/Home";
+import Oss from "./pages/Oss";
 import Projects from "./pages/Projects";
 import Talk from "./pages/Talk";
 import Talks from "./pages/Talks";
@@ -25,6 +26,7 @@ function Layout() {
           <Route path="/essays" element={<Essays />} />
           <Route path="/talks" element={<Talks />} />
           <Route path="/talks/:slug" element={<Talk />} />
+          <Route path="/oss" element={<Oss />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/:section/:slug" element={<Article />} />
         </Routes>

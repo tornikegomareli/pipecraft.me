@@ -249,6 +249,18 @@ export default function Home() {
       </div>
 
       <section className="home-section">
+        <h2>Shipped</h2>
+        <p>Outside of my open source work, here are a few apps I've worked on, built, and shipped professionally:</p>
+        <div className="apps">
+          {SHIPPED_APPS.map((app) => (
+            <a key={app.name} className="app-icon" href={app.url} target="_blank" rel="noreferrer" title={app.name}>
+              <img src={app.icon} alt={app.name} loading="lazy" />
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="home-section">
         <h2>Open Source</h2>
         <p>
           I'm an active open source contributor and go by{" "}
@@ -263,19 +275,8 @@ export default function Home() {
 
         <ContributionGraph days={contributions} />
 
-        <h3>Shipped</h3>
-        <p>Outside of my open source work, here are a few apps I've worked on, built, and shipped professionally:</p>
-        <div className="apps">
-          {SHIPPED_APPS.map((app) => (
-            <a key={app.name} className="app-icon" href={app.url} target="_blank" rel="noreferrer" title={app.name}>
-              <img src={app.icon} alt={app.name} loading="lazy" />
-            </a>
-          ))}
-        </div>
-
         {projects.length > 0 && (
           <>
-            <h3>Featured projects</h3>
             <div className="projects-grid">
               {projects.map((p) => (
                 <a key={p.name} className="project-card" href={p.html_url} target="_blank" rel="noreferrer">
@@ -288,7 +289,7 @@ export default function Home() {
                 </a>
               ))}
             </div>
-            <Link to="/projects" className="see-all">
+            <Link to="/oss" className="see-all">
               See all projects →
             </Link>
           </>

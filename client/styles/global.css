@@ -159,7 +159,6 @@ ul {
 }
 
 /* Underlined text links */
-.intro a,
 .bio a,
 .prose a,
 .article-foot a {
@@ -647,7 +646,6 @@ textarea.field {
   .tabs a:hover {
     color: var(--text);
   }
-  .intro a:hover,
   .bio a:hover,
   .prose a:hover,
   .article-foot a:hover {

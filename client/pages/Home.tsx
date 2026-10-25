@@ -194,12 +194,7 @@ export default function Home() {
     <div className="enter">
       <header className="intro rise">
         <h1>Tornike Gomareli</h1>
-        <p>
-          Making Mac apps at{" "}
-          <a href="https://insanearts.io" target="_blank" rel="noreferrer">
-            InsaneArts
-          </a>
-        </p>
+        <p>Making software which feels truly crafted</p>
       </header>
       <nav className="tabs rise" style={{ "--i": 1 } as CSSProperties} aria-label="Sections">
         {TABS.map((t) => (

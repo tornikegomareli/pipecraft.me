@@ -25,6 +25,7 @@
   "dependencies": {
     "@chenglou/pretext": "^0.0.4",
     "@elysiajs/cors": "^1.1.1",
+    "@resvg/resvg-js": "^2.6.2",
     "elysia": "^1.1.28",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
@@ -32,6 +33,7 @@
     "marked-highlight": "^2.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.0.0"
+    "react-router-dom": "^7.0.0",
+    "satori": "^0.33.5"
   }
 }

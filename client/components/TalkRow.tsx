@@ -1,50 +1,27 @@
 import { Link } from "react-router-dom";
+import { formatMonthYear } from "../lib/posts";
 
 interface TalkRowProps {
   slug: string;
   title: string;
   date: string;
-  spoiler?: string;
   youtubeId?: string;
-  duration?: string;
 }
 
-function fmtShort(s: string): string {
-  const d = new Date(s);
-  const m = d.toLocaleString("en-US", { month: "short" }).toLowerCase();
-  const y = String(d.getFullYear()).slice(2);
-  return `${m} ${String(d.getDate()).padStart(2, "0")}, ${y}`;
-}
-
-export default function TalkRow({ slug, title, date, spoiler, youtubeId, duration }: TalkRowProps) {
-  const thumb = youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : null;
-
+export default function TalkRow({ slug, title, date, youtubeId }: TalkRowProps) {
   return (
-    <Link to={`/talks/${slug}`} className="talk-row">
-      <div className="thumb">
-        {thumb && (
-          <img
-            src={thumb}
-            alt=""
-            loading="lazy"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).style.display = "none";
-            }}
-          />
-        )}
-        <span className="play-overlay">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Play">
-            <title>Play</title>
-            <polygon points="6,4 20,12 6,20" />
-          </svg>
+    <li>
+      <Link to={`/talks/${slug}`} className="row talk">
+        <span className="talk-thumb">
+          {youtubeId && <img src={`https://i.ytimg.com/vi/${youtubeId}/mqdefault.jpg`} alt="" loading="lazy" />}
         </span>
-      </div>
-      <div className="info">
-        <span className="title">{title}</span>
-        {spoiler && <span className="venue">{spoiler}</span>}
-        <span className="date">{fmtShort(date)}</span>
-      </div>
-      {duration && <span className="dur">{duration}</span>}
-    </Link>
+        <span className="talk-text">
+          <span className="row-title">{title}</span>
+          <time className="row-meta" dateTime={date}>
+            {formatMonthYear(date)}
+          </time>
+        </span>
+      </Link>
+    </li>
   );
 }

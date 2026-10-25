@@ -1,46 +1,39 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const NAV = [
-  { id: "home", label: "home", path: "/" },
-  { id: "essays", label: "essays", path: "/essays" },
-  { id: "blog", label: "blog", path: "/posts" },
-  { id: "talks", label: "talks", path: "/talks" },
-  { id: "oss", label: "OSS", path: "/oss" },
-  { id: "projects", label: "projects", path: "/projects" },
+  { id: "writing", label: "Writing", path: "/writing" },
+  { id: "talks", label: "Talks", path: "/talks" },
+  { id: "oss", label: "Open source", path: "/oss" },
 ] as const;
 
-function activeId(pathname: string): string {
-  if (pathname === "/") return "home";
-  if (pathname.startsWith("/essays")) return "essays";
-  if (pathname.startsWith("/posts")) return "blog";
+function activeId(pathname: string): string | null {
+  if (pathname.startsWith("/writing") || pathname.startsWith("/essays") || pathname.startsWith("/posts")) {
+    return "writing";
+  }
   if (pathname.startsWith("/talks")) return "talks";
   if (pathname.startsWith("/oss")) return "oss";
-  if (pathname.startsWith("/projects")) return "projects";
-  return "home";
+  return null;
 }
 
 export default function Header() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const active = activeId(location.pathname);
+  const { pathname } = useLocation();
+  const active = activeId(pathname);
 
   return (
-    <div className="topnav">
-      <Link to="/" className="brand">
-        tornike<span className="slash">/</span>gomareli
-      </Link>
+    <header className="topnav">
+      {pathname !== "/" && (
+        <Link to="/" className="brand">
+          <img src="/avatar.jpg" alt="" />
+          <span>Tornike Gomareli</span>
+        </Link>
+      )}
       <nav>
         {NAV.map((n) => (
-          <button
-            key={n.id}
-            type="button"
-            aria-current={active === n.id ? "true" : undefined}
-            onClick={() => navigate(n.path)}
-          >
+          <Link key={n.id} to={n.path} aria-current={active === n.id ? "page" : undefined}>
             {n.label}
-          </button>
+          </Link>
         ))}
       </nav>
-    </div>
+    </header>
   );
 }

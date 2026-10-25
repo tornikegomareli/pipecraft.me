@@ -1,24 +1,8 @@
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Loading from "../components/Loading";
 import { useFetch } from "../hooks/useFetch";
-
-interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  spoiler?: string;
-  section: string;
-  content: string;
-  readingTime: number;
-  youtubeId?: string;
-}
-
-function fmtShort(s: string): string {
-  const d = new Date(s);
-  const m = d.toLocaleString("en-US", { month: "short" }).toLowerCase();
-  const y = String(d.getFullYear()).slice(2);
-  return `${m} ${String(d.getDate()).padStart(2, "0")}, ${y}`;
-}
+import { type Post, formatFullDate } from "../lib/posts";
 
 export default function Talk() {
   const { slug } = useParams<{ slug: string }>();
@@ -36,70 +20,26 @@ export default function Talk() {
     };
   }, [post]);
 
-  if (loading) return <div className="loading-state">loading...</div>;
-  if (error || !post) {
-    return (
-      <div className="error-state">
-        <h1>Talk not found</h1>
-        <Link to="/talks">back to talks</Link>
-      </div>
-    );
-  }
+  if (loading) return <Loading />;
+  if (error || !post) return <h1 className="page-title">Not found</h1>;
 
   return (
-    <>
-      <Link to="/talks" className="back-link">
-        ← back to talks
-      </Link>
+    <article>
       <header className="article-head">
         <h1>{post.title}</h1>
-        {post.spoiler && <p className="sub">{post.spoiler}</p>}
-        <div className="meta">
-          <span>{fmtShort(post.date)}</span>
-          <span>·</span>
-          <span>{post.readingTime} min read</span>
-        </div>
+        {post.spoiler && <p className="deck">{post.spoiler}</p>}
+        <p className="meta">
+          <time dateTime={post.date}>{formatFullDate(post.date)}</time>
+        </p>
       </header>
-      {post.youtubeId ? (
-        <div
-          style={{
-            position: "relative",
-            paddingTop: "56.25%",
-            borderRadius: 4,
-            overflow: "hidden",
-            border: "1px solid var(--rule)",
-            marginBottom: 32,
-          }}
-        >
+      {post.youtubeId && (
+        <div className="video">
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${post.youtubeId}`}
             title={post.title}
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              border: 0,
-            }}
-            allow="accelerometer; autoplay; encrypted-media"
+            allow="accelerometer; autoplay; encrypted-media; picture-in-picture"
             allowFullScreen
           />
-        </div>
-      ) : (
-        <div
-          style={{
-            aspectRatio: "16/9",
-            background: "var(--paper-2)",
-            border: "1px solid var(--rule)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "var(--ink-3)",
-            fontSize: 12,
-            marginBottom: 32,
-          }}
-        >
-          recording coming soon
         </div>
       )}
       {post.content && (
@@ -109,6 +49,6 @@ export default function Talk() {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       )}
-    </>
+    </article>
   );
 }

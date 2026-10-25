@@ -37,8 +37,9 @@ function parseFloatDirective(img: HTMLImageElement): { side: "left" | "right"; c
   return null;
 }
 
-const FONT = '400 17px "Inter", -apple-system, BlinkMacSystemFont, sans-serif';
-const LINE_HEIGHT = 30;
+// Must match .prose in global.css
+const FONT = '400 17px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+const LINE_HEIGHT = 28;
 const IMG_PADDING = 20; // gap between image and text
 
 function getCircleIntervalForBand(

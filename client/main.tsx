@@ -1,18 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import TweaksPanel from "./components/TweaksPanel";
-import { ThemeProvider } from "./hooks/useTheme";
 import Article from "./pages/Article";
-import Blog from "./pages/Blog";
-import Essays from "./pages/Essays";
 import Home from "./pages/Home";
 import Oss from "./pages/Oss";
 import Projects from "./pages/Projects";
 import Talk from "./pages/Talk";
 import Talks from "./pages/Talks";
+import Writing from "./pages/Writing";
 import "./styles/global.css";
 
 function Layout() {
@@ -20,30 +17,30 @@ function Layout() {
     <div className="layout">
       <div className="wrap">
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/posts" element={<Blog />} />
-          <Route path="/essays" element={<Essays />} />
-          <Route path="/talks" element={<Talks />} />
-          <Route path="/talks/:slug" element={<Talk />} />
-          <Route path="/oss" element={<Oss />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/:section/:slug" element={<Article />} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/writing" element={<Writing />} />
+            <Route path="/posts" element={<Navigate to="/writing" replace />} />
+            <Route path="/essays" element={<Navigate to="/writing" replace />} />
+            <Route path="/talks" element={<Talks />} />
+            <Route path="/talks/:slug" element={<Talk />} />
+            <Route path="/oss" element={<Oss />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/:section/:slug" element={<Article />} />
+          </Routes>
+        </main>
       </div>
       <Footer />
-      <TweaksPanel />
     </div>
   );
 }
 
 function App() {
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
   );
 }
 

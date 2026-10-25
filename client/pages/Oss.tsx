@@ -1,3 +1,4 @@
+import Loading from "../components/Loading";
 import { useFetch } from "../hooks/useFetch";
 
 interface Repo {
@@ -5,33 +6,29 @@ interface Repo {
   description: string | null;
   html_url: string;
   stargazers_count: number;
-  language: string | null;
 }
 
 export default function Oss() {
   const { data, loading } = useFetch<Repo[]>("/api/projects");
 
-  if (loading) return <div className="loading-state">loading...</div>;
-  const repos = data || [];
-
   return (
     <>
-      <div className="intro">
-        <h1>OSS</h1>
-        <p>Every public repo of mine with 10+ stars, sorted by stars.</p>
-      </div>
-      <div className="projects-list">
-        {repos.map((p) => (
-          <a key={p.name} className="project-row" href={p.html_url} target="_blank" rel="noreferrer">
-            <span>
-              <div className="name">{p.name}</div>
-              {p.description && <div className="desc">{p.description}</div>}
-            </span>
-            <span className="lang">{p.language || ""}</span>
-            <span className="stars">★ {p.stargazers_count}</span>
-          </a>
-        ))}
-      </div>
+      <h1 className="page-title">Open source</h1>
+      {loading ? (
+        <Loading />
+      ) : (
+        <ul className="rows">
+          {(data ?? []).map((r) => (
+            <li key={r.name}>
+              <a className="row" href={r.html_url} target="_blank" rel="noreferrer">
+                <span className="row-title">{r.name}</span>
+                <span className="row-meta">★ {r.stargazers_count.toLocaleString("en-US")}</span>
+                {r.description && <span className="row-sub">{r.description}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }

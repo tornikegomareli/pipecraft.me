@@ -1,19 +1,50 @@
+const LINKS = [
+  {
+    label: "Email",
+    href: "mailto:gomarelidevelopment@gmail.com",
+    path: "M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13zm2.2.5 7.3 6.1a1 1 0 0 0 1 0L19.8 6H4.2zM4 7.9v10.6c0 .3.2.5.5.5h15c.3 0 .5-.2.5-.5V7.9l-7.24 6.04a2 2 0 0 1-2.52 0L4 7.9z",
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/tornikegomareli",
+    viewBox: "0 0 16 16",
+    path: "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z",
+  },
+  {
+    label: "X",
+    href: "https://x.com/tornikegomareli",
+    path: "M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.63 7.58H.48l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41z",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/tornikegomareli",
+    path: "M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45z",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@Devtherapy",
+    path: "M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z",
+  },
+  {
+    label: "Newsletter",
+    href: "https://tornikegomareli.substack.com/",
+    path: "M22.54 8.24H1.46V5.41h21.08v2.83zM1.46 10.81V24L12 18.11 22.54 24V10.81H1.46zM22.54 0H1.46v2.84h21.08V0z",
+  },
+];
+
 export default function Footer() {
-  const year = new Date().getFullYear();
   return (
-    <footer className="site">
-      <span>© {year} tornike gomareli</span>
-      <span>
-        <a href="https://github.com/tornikegomareli" target="_blank" rel="noreferrer">
-          github
-        </a>
-        {"  ·  "}
-        <a href="https://tornikegomareli.substack.com/" target="_blank" rel="noreferrer">
-          newsletter
-        </a>
-        {"  ·  "}
-        <a href="/rss.xml">rss</a>
-      </span>
+    <footer className="site-footer">
+      <nav className="social">
+        {LINKS.map((l) => (
+          <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
+            <svg viewBox={l.viewBox ?? "0 0 24 24"} role="img" aria-label={l.label}>
+              <title>{l.label}</title>
+              <path d={l.path} />
+            </svg>
+          </a>
+        ))}
+      </nav>
     </footer>
   );
 }

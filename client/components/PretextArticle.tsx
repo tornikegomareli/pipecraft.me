@@ -72,16 +72,16 @@ export default function PretextArticle({
     for (const float of floatsRef.current) {
       const { img, side, paragraph, originalText } = float;
 
-      // Get image dimensions
-      const imgWidth = img.naturalWidth
-        ? Math.min(img.clientWidth || 300, containerWidth * 0.45)
-        : Math.min(300, containerWidth * 0.45);
-      const imgHeight = img.clientHeight || 200;
+      // Get image dimensions. The height comes from the aspect ratio: clientHeight
+      // still holds the natural size here, before the width below is applied.
+      const imgWidth = Math.min(img.naturalWidth || 300, containerWidth * 0.45);
+      const imgHeight = img.naturalWidth ? (imgWidth * img.naturalHeight) / img.naturalWidth : 200;
 
       // Position the image
       img.style.width = `${imgWidth}px`;
       img.style.position = "absolute";
       img.style.top = "0px";
+      img.style.margin = "0";
       if (side === "right") {
         img.style.left = `${containerWidth - imgWidth}px`;
       } else {
@@ -138,12 +138,10 @@ export default function PretextArticle({
       paragraph.style.font = FONT;
       paragraph.style.lineHeight = `${LINE_HEIGHT}px`;
 
-      // Keep image, remove text nodes and old spans
-      const existingSpans = paragraph.querySelectorAll(".pretext-wrap-line");
-      for (const span of existingSpans) span.remove();
-      // Remove bare text nodes
+      // Keep the image, remove everything else: text nodes, inline elements such as
+      // <strong> and <code> (their text is already in the lines), and old spans
       for (const child of Array.from(paragraph.childNodes)) {
-        if (child.nodeType === Node.TEXT_NODE) child.remove();
+        if (child !== img) child.remove();
       }
 
       for (const line of lines) {

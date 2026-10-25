@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { type CSSProperties, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { useFetch } from "../hooks/useFetch";
@@ -21,19 +21,24 @@ export default function Talk() {
   }, [post]);
 
   if (loading) return <Loading />;
-  if (error || !post) return <h1 className="page-title">Not found</h1>;
+  if (error || !post) {
+    return (
+      <header className="head enter">
+        <h1>Not found</h1>
+      </header>
+    );
+  }
 
   return (
-    <article>
-      <header className="article-head">
+    <article className="enter">
+      <header className="head rise">
         <h1>{post.title}</h1>
-        {post.spoiler && <p className="deck">{post.spoiler}</p>}
-        <p className="meta">
+        <p>
           <time dateTime={post.date}>{formatFullDate(post.date)}</time>
         </p>
       </header>
       {post.youtubeId && (
-        <div className="video">
+        <div className="video wide rise" style={{ "--i": 1 } as CSSProperties}>
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${post.youtubeId}`}
             title={post.title}
@@ -44,7 +49,8 @@ export default function Talk() {
       )}
       {post.content && (
         <div
-          className="prose"
+          className="prose rise"
+          style={{ "--i": 2 } as CSSProperties}
           // biome-ignore lint/security/noDangerouslySetInnerHtml: server-rendered markdown
           dangerouslySetInnerHTML={{ __html: post.content }}
         />

@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import PretextArticle from "../components/PretextArticle";
@@ -8,6 +8,7 @@ import { type Post, formatFullDate } from "../lib/posts";
 export default function Article() {
   const { section, slug } = useParams<{ section: string; slug: string }>();
   const { data: post, loading, error } = useFetch<Post>(`/api/posts/${section}/${slug}`);
+  const [copied, setCopied] = useState(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: re-run on route change
   useEffect(() => {
@@ -32,6 +33,20 @@ export default function Article() {
 
   const githubEditUrl = `https://github.com/tornikegomareli/pipecraft.me/edit/main/${post.section}/${post.slug}/index.md`;
 
+  // The share sheet where the browser has one, otherwise the link goes to the clipboard
+  const share = () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      // Closing the share sheet rejects the promise
+      navigator.share({ title: post.title, url }).catch(() => {});
+      return;
+    }
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
     <article className="enter">
       <header className="head rise">
@@ -47,6 +62,9 @@ export default function Article() {
         <a href={githubEditUrl} target="_blank" rel="noreferrer">
           Edit on GitHub
         </a>
+        <button type="button" onClick={share} aria-live="polite">
+          {copied ? "Copied" : "Share"}
+        </button>
       </footer>
     </article>
   );

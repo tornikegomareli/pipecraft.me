@@ -161,7 +161,8 @@ ul {
 /* Underlined text links */
 .bio a,
 .prose a,
-.article-foot a {
+.article-foot a,
+.article-foot button {
   text-decoration: underline;
   text-decoration-color: var(--line);
   text-decoration-thickness: 2px;
@@ -520,6 +521,8 @@ ul {
   color: var(--text);
 }
 .article-foot {
+  display: flex;
+  gap: 24px;
   margin-top: 48px;
   color: var(--text-2);
 }
@@ -648,7 +651,8 @@ textarea.field {
   }
   .bio a:hover,
   .prose a:hover,
-  .article-foot a:hover {
+  .article-foot a:hover,
+  .article-foot button:hover {
     text-decoration-color: var(--line-strong);
   }
   .sheet-close:hover {

@@ -50,7 +50,6 @@ const LINKS: Row[] = [
   { key: "github", title: "GitHub", href: "https://github.com/tornikegomareli" },
   { key: "linkedin", title: "LinkedIn", href: "https://www.linkedin.com/in/tornikegomareli" },
   { key: "youtube", title: "YouTube", href: "https://www.youtube.com/@Devtherapy" },
-  { key: "newsletter", title: "Newsletter", href: "https://tornikegomareli.substack.com/" },
 ];
 
 interface Repo {

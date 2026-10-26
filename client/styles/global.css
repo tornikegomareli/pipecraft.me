@@ -159,7 +159,6 @@ ul {
 }
 
 /* Underlined text links */
-.bio a,
 .prose a,
 .article-foot a,
 .article-foot button {
@@ -441,6 +440,7 @@ ul {
 .prose > :first-child {
   margin-top: 0;
 }
+.bio strong,
 .prose strong {
   font-weight: 600;
 }
@@ -649,7 +649,6 @@ textarea.field {
   .tabs a:hover {
     color: var(--text);
   }
-  .bio a:hover,
   .prose a:hover,
   .article-foot a:hover,
   .article-foot button:hover {

@@ -110,20 +110,18 @@ function About({ onContact }: { onContact: () => void }) {
     <>
       <div className="bio rise">
         <p>
-          I love building. Swift is home, but I'm a generalist engineer at heart, and I reach for Rust, Zig, Go, or
-          TypeScript when the problem asks for it. Today I'm deep into agentic engineering, and 10+ years of building
-          software gave me fundamentals strong enough to pick up any stack. Understanding how things work under the hood
-          is the whole point.
+          I'm a software engineer and designer with 10+ years of experience building things I care about. These days, I
+          build alongside AI agents. I like to call myself an <strong>Applied AI Engineer</strong> because I'm
+          fascinated by the idea that AI can amplify my skills tenfold, push the boundaries of what I can create, and
+          help me build things that genuinely improve everyday life.
         </p>
         <p>
-          I host{" "}
-          <a href="https://www.youtube.com/@Devtherapy" target="_blank" rel="noreferrer">
-            Devtherapy
-          </a>
-          , a podcast about engineering, developer experience, and engineering culture, recorded with engineers I
-          admire. I also organize the Apple Developers Georgia community meetups in Tbilisi, and I'm a co-organizer and
-          co-founder of Hacktoberfest, one of the biggest hackathons in Georgia.
+          I believe AI should help us build better software, not more software. There's already enough slop in the
+          world. I care deeply about the craft, the tiny details most people won't notice, the feeling of a product, and
+          the thought behind every interaction. I love understanding how things work, challenging what's possible, and
+          turning ambitious ideas into something real.
         </p>
+        <p>At the end of the day, I just love building. And I love every second of it.</p>
       </div>
       <Rows rows={[{ key: "email", title: "Email", onClick: onContact }, ...LINKS]} />
     </>

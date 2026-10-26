@@ -109,10 +109,10 @@ function About({ onContact }: { onContact: () => void }) {
     <>
       <div className="bio rise">
         <p>
-          I'm a software engineer and designer with 10+ years of experience building things I care about. These days, I
-          build alongside AI agents. I like to call myself an <strong>Applied AI Engineer</strong> because I'm
-          fascinated by the idea that AI can amplify my skills tenfold, push the boundaries of what I can create, and
-          help me build things that genuinely improve everyday life.
+          I'm an engineer and builder with 10+ years of experience building things I care about. These days, I build
+          alongside AI agents. I like to call myself an <strong>Applied AI Engineer</strong> because I'm fascinated by
+          the idea that AI can amplify my skills tenfold, push the boundaries of what I can create, and help me build
+          things that genuinely improve everyday life.
         </p>
         <p>
           I believe AI should help us build better software, not more software. There's already enough slop in the

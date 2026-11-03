@@ -298,6 +298,13 @@ ul {
   overflow-wrap: anywhere;
   text-wrap: pretty;
 }
+/* The colors of the drooop logo */
+.drooop {
+  background: linear-gradient(90deg, #ff0a66, #ff3d00 20%, #ffa106 38%, #efd100 52%, #66dd00 66%, #00c9b5 82%, #0076ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 .row-sub {
   color: var(--text-2);
   text-wrap: balance;

@@ -17,7 +17,7 @@ const TABS = [
 const APPS: Row[] = [
   {
     key: "drooop",
-    title: "drooop",
+    title: <span className="drooop">drooop</span>,
     sub: "The missing layer between your Mac and iPhone.",
     href: "https://drooop.app",
     preview: "/previews/drooop.webp",

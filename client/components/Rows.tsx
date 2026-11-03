@@ -1,10 +1,10 @@
-import { type CSSProperties, type PointerEvent, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
 export interface Row {
   key: string;
-  title: string;
+  title: ReactNode;
   sub?: string;
   to?: string;
   href?: string;

@@ -16,6 +16,13 @@ const TABS = [
 
 const APPS: Row[] = [
   {
+    key: "drooop",
+    title: "drooop",
+    sub: "The missing layer between your Mac and iPhone.",
+    href: "https://drooop.app",
+    preview: "/previews/drooop.webp",
+  },
+  {
     key: "opie",
     title: "Opie",
     sub: "Your actions, around the cursor.",
@@ -35,13 +42,6 @@ const APPS: Row[] = [
     sub: "Speak. It's written.",
     href: "https://usetalkify.app",
     preview: "/previews/talkify.webp",
-  },
-  {
-    key: "drooop",
-    title: "drooop",
-    sub: "The missing layer between your Mac and iPhone.",
-    href: "https://drooop.app",
-    preview: "/previews/drooop.webp",
   },
 ];
 

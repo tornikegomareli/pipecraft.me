@@ -1,0 +1,15 @@
+name: pipecraft-me
+region: fra
+services:
+  - name: web
+    dockerfile_path: Dockerfile
+    github:
+      repo: tornikegomareli/pipecraft.me
+      branch: main
+      deploy_on_push: true
+    http_port: 3000
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_count: 1
+domains:
+  - domain: www.pipecraft.me
+    type: PRIMARY

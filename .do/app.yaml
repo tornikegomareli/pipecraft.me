@@ -11,5 +11,29 @@ services:
     instance_size_slug: apps-s-1vcpu-0.5gb
     instance_count: 1
 domains:
-  - domain: www.pipecraft.me
+  - domain: tornikegomareli.com
     type: PRIMARY
+  - domain: www.tornikegomareli.com
+    type: ALIAS
+  - domain: www.pipecraft.me
+    type: ALIAS
+ingress:
+  rules:
+    - match:
+        authority:
+          exact: www.tornikegomareli.com
+      redirect:
+        authority: tornikegomareli.com
+        redirect_code: 301
+    - match:
+        authority:
+          exact: www.pipecraft.me
+      redirect:
+        authority: tornikegomareli.com
+        redirect_code: 301
+    - match:
+        path:
+          prefix: /
+      component:
+        name: web
+        preserve_path_prefix: true

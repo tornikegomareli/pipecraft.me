@@ -11,7 +11,7 @@ export const SITE_CONFIG = {
   name: "Tornike Gomareli",
   title: "Software Engineer",
   description: "Making software which feels truly crafted",
-  url: "https://www.pipecraft.me",
+  url: "https://tornikegomareli.com",
   links: {
     email: "tornike.gomareli@gmail.com",
     github: "tornikegomareli",

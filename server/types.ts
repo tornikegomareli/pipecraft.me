@@ -10,6 +10,7 @@ export interface Post extends PostMeta {
   section: Section;
   readingTime: number;
   youtubeId?: string;
+  cover?: string;
 }
 
 export type Section = "posts" | "projects" | "talks" | "essays";

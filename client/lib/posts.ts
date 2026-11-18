@@ -6,6 +6,7 @@ export interface PostItem {
   section: string;
   readingTime: number;
   youtubeId?: string;
+  cover?: string;
 }
 
 export interface Post extends PostItem {

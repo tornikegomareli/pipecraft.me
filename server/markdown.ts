@@ -22,6 +22,11 @@ function extractYouTubeId(text: string): string | undefined {
   return match?.[1];
 }
 
+// The first image in the post, shown on its card on the home page
+function extractCover(text: string): string | undefined {
+  return text.match(/!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/)?.[1];
+}
+
 function estimateReadingTime(text: string): number {
   const words = text.trim().split(/\s+/).length;
   return Math.max(1, Math.round(words / 230));
@@ -54,6 +59,7 @@ export async function getPostsFromSection(section: Section): Promise<Post[]> {
           section,
           readingTime: estimateReadingTime(markdownContent),
           youtubeId: extractYouTubeId(markdownContent),
+          cover: extractCover(markdownContent),
         });
       } catch {
         // skip posts that can't be read

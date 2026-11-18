@@ -115,6 +115,7 @@ const app = new Elysia()
         section: p.section,
         readingTime: p.readingTime,
         youtubeId: p.youtubeId,
+        cover: p.cover,
       }));
     }
     return listing;

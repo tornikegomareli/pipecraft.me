@@ -36,7 +36,7 @@ function Intro({ onContact }: { onContact: () => void }) {
   return (
     <header className="side">
       <div className="who rise">
-        <img className="me" src="/media/avatar.png" width={42} height={42} alt="" />
+        <img className="me" src="/media/me.jpg" width={62} height={62} alt="" />
         <div>
           <h1>Tornike Gomareli</h1>
           <p>Applied AI Engineer</p>

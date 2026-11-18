@@ -215,7 +215,8 @@ ul {
 .me {
   width: 62px;
   height: 62px;
-  image-rendering: pixelated;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--edge);
 }
 .who h1,
 .who p {

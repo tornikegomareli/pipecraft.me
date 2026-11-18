@@ -8,6 +8,7 @@
     "dev:client": "vite",
     "build": "vite build",
     "serve": "bun run server/index.ts",
+    "resume": "sh resume/build.sh",
     "format": "biome format --write .",
     "lint": "biome lint .",
     "validate": "biome check ."

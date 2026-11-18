@@ -387,69 +387,44 @@ a.card:active {
   height: 100%;
   object-fit: cover;
 }
-.kind {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  width: 22px;
-  height: 22px;
-  color: #fff;
-  filter: drop-shadow(0 0 0.5px rgb(0 0 0 / 0.45)) drop-shadow(0 1px 2px rgb(0 0 0 / 0.25));
-  pointer-events: none;
-}
-/* The name and the way out show on hover, and always on touch screens */
-.name,
-.actions {
+/* The name, with an arrow out, shows on hover and always on touch screens */
+.name {
   position: absolute;
   bottom: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: calc(100% - 28px);
+  height: 38px;
+  padding: 0 14px 0 16px;
+  border-radius: 19px;
+  background: #fff;
+  font-size: 14px;
+  white-space: nowrap;
   opacity: 0;
   transform: translateY(6px);
   transition: opacity 0.2s var(--ease-out), transform 0.3s var(--ease-out);
 }
-.name {
-  left: 14px;
-  max-width: calc(100% - 120px);
-  height: 38px;
-  padding: 0 16px;
-  border-radius: 19px;
-  background: #fff;
-  font-size: 14px;
-  line-height: 38px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.actions {
-  right: 14px;
-}
-.go {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  height: 38px;
-  padding: 0 15px 0 13px;
-  border-radius: 19px;
-  background: var(--ink);
-  color: #fff;
-  font-size: 14px;
-}
-.go svg {
+.name svg {
+  flex-shrink: 0;
   width: 10px;
   height: 10px;
 }
 .card:hover .name,
-.card:hover .actions,
-.card:focus-visible .name,
-.card:focus-visible .actions {
+.card:focus-visible .name {
   opacity: 1;
   transform: none;
 }
 @media (hover: none) {
-  .name,
-  .actions {
+  .name {
     opacity: 1;
     transform: none;
   }
+}
+/* Filter changes are frequent, so only the first visit animates the cards */
+.grid.instant .card {
+  animation: none;
 }
 
 /* Writing: one list, with the hovered article's picture beside it */
@@ -1042,8 +1017,7 @@ textarea.field {
     animation: none;
   }
   .peek-card,
-  .name,
-  .actions {
+  .name {
     transform: none;
     transition: opacity 0.2s ease;
   }

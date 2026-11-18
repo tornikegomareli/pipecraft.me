@@ -37,14 +37,6 @@ export function Loop({ name, className }: { name: string; className?: string }) 
   );
 }
 
-// The corner mark Guri's cards use for a video
-const VIDEO = (
-  <svg className="kind" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-    <rect x="2.5" y="5" width="14" height="14" rx="3" />
-    <path d="m16.5 10 5-3v10l-5-3" strokeLinejoin="round" />
-  </svg>
-);
-
 const OUT = (
   <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
     <path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" strokeLinecap="round" strokeLinejoin="round" />
@@ -70,10 +62,9 @@ export function WorkCard({ work, index }: { work: Work; index: number }) {
       <span className="stage">
         <Loop name={work.media} className="reel" />
       </span>
-      {VIDEO}
-      <span className="name">{work.key === "drooop" ? <span className="drooop">drooop</span> : work.name}</span>
-      <span className="actions">
-        <span className="go">Open {OUT}</span>
+      <span className="name">
+        {work.key === "drooop" ? <span className="drooop">drooop</span> : work.name}
+        {OUT}
       </span>
       <span className="edge" />
     </a>

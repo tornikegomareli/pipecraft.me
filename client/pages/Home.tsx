@@ -96,6 +96,7 @@ function Intro({ onContact }: { onContact: () => void }) {
 export default function Home() {
   const { pathname } = useLocation();
   const [contactOpen, setContactOpen] = useState(false);
+  const [filtered, setFiltered] = useState(false);
   const { data: posts } = useFetch<PostsBySection>("/api/posts");
   const { data: repos } = useFetch<Repo[]>("/api/projects");
   const filter = FILTERS.some((f) => f.path === pathname) ? pathname : "/";
@@ -144,7 +145,13 @@ export default function Home() {
       <main className="feed">
         <nav className="chips rise" style={{ "--i": 1 } as CSSProperties} aria-label="Filter">
           {FILTERS.map((f) => (
-            <Link key={f.path} to={f.path} className="chip" aria-current={f.path === filter ? "page" : undefined}>
+            <Link
+              key={f.path}
+              to={f.path}
+              className="chip"
+              aria-current={f.path === filter ? "page" : undefined}
+              onClick={() => setFiltered(true)}
+            >
               {f.label}
             </Link>
           ))}
@@ -152,7 +159,8 @@ export default function Home() {
             Resume
           </a>
         </nav>
-        <div key={filter} className="grid">
+        {/* Cards rise in on the first visit; after a filter change they appear at once */}
+        <div key={filter} className={filtered ? "grid instant" : "grid"}>
           {cards}
         </div>
       </main>

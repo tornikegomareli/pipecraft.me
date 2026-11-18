@@ -183,62 +183,66 @@ ul {
 }
 
 /* ---------- Home ---------- */
-/* The intro stays on the left while the cards scroll past it */
+/* Sizes and colors follow gurisitchinava.com. The intro stays on the left while the cards scroll past it. */
 .home {
-  display: grid;
-  grid-template-columns: minmax(300px, 1fr) minmax(0, 788px);
-  gap: 48px;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 24px max(24px, env(safe-area-inset-right)) 96px max(24px, env(safe-area-inset-left));
-}
-.side {
-  position: sticky;
-  z-index: 2;
-  top: 24px;
-  align-self: start;
+  --ink: #111;
+  --ink-role: #666;
+  --ink-subtle: #4e4e55;
+  --ink-faint: #8a8a8f;
+  --edge: rgb(39 39 42 / 0.1);
+  --tile: #f4f4f5;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  max-width: 440px;
-  padding: 0 10px;
+  gap: 96px;
+  max-width: 648px;
+  margin: 0 auto;
+  padding: 48px max(24px, env(safe-area-inset-right)) 96px max(24px, env(safe-area-inset-left));
+  color: var(--ink);
+  font-size: 16px;
 }
-.me {
-  width: 64px;
-  height: 64px;
-  image-rendering: pixelated;
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-left: 10px;
 }
 .who {
   display: flex;
   flex-direction: column;
-  margin-top: -8px;
-  font-size: 17px;
-  line-height: 1.55;
+  gap: 16px;
 }
-.who h1 {
-  font-size: inherit;
-  font-weight: 500;
+.me {
+  width: 62px;
+  height: 62px;
+  image-rendering: pixelated;
+}
+.who h1,
+.who p {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 .who p {
-  color: var(--text-2);
+  color: var(--ink-role);
 }
 .story {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  line-height: 1.65;
+  gap: 16px;
   text-wrap: pretty;
 }
 .links {
   display: flex;
   flex-wrap: wrap;
   gap: 0 18px;
-  color: var(--text-2);
+  color: var(--ink-faint);
+  font-size: 14px;
 }
 .links a,
 .links button {
   padding: 4px 0;
-  transition: color 0.2s ease;
+  transition: color 0.14s var(--ease-out);
 }
 
 /* A link in running text, with the app's icon and a demo beside it on hover */
@@ -247,7 +251,7 @@ ul {
   white-space: nowrap;
 }
 .peek a {
-  text-decoration: underline dotted var(--line-strong);
+  text-decoration: underline dotted var(--ink-faint);
   text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
 }
@@ -267,15 +271,15 @@ ul {
   width: 288px;
   aspect-ratio: 16 / 9;
   margin-top: -81px;
+  border: 1px solid var(--edge);
   border-radius: 12px;
   overflow: hidden;
-  background: #000;
-  box-shadow: var(--sheet-shadow);
+  background: #fff;
   pointer-events: none;
   opacity: 0;
   transform: translateX(-6px) scale(0.98);
   transform-origin: left center;
-  transition: opacity 0.18s ease-out, transform 0.18s var(--settle);
+  transition: opacity 0.18s var(--ease-out), transform 0.18s var(--ease-out);
 }
 .peek-card video {
   display: block;
@@ -285,30 +289,55 @@ ul {
 }
 
 .feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   min-width: 0;
 }
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
 }
 .chip {
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--fill);
-  color: var(--text-2);
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 17px;
+  background: var(--tile);
+  color: var(--ink-subtle);
   font-size: 14px;
-  line-height: 22px;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--settle);
+  transition: background-color 0.16s var(--ease-out), color 0.16s var(--ease-out), transform 0.14s var(--ease-out);
 }
 .chip[aria-current="page"] {
-  background: var(--text);
-  color: var(--bg);
+  background: var(--ink);
+  color: #fff;
 }
 .chip:active {
   transform: scale(0.96);
-  transition-duration: 0.05s;
+}
+
+/* Two columns from 1180px, as on gurisitchinava.com */
+@media (min-width: 1180px) {
+  .home {
+    display: grid;
+    grid-template-columns: 540px minmax(0, 1fr);
+    align-items: start;
+    gap: 64px;
+    max-width: none;
+    padding-top: 24px;
+  }
+  .side {
+    position: sticky;
+    z-index: 3;
+    top: 24px;
+  }
+}
+@media (max-width: 1179px) {
+  .peek-card {
+    display: none;
+  }
 }
 
 /* ---------- Cards ---------- */
@@ -320,12 +349,12 @@ ul {
 }
 .card {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: block;
   aspect-ratio: 1;
   border-radius: 20px;
-  background: var(--tint, var(--fill));
+  background: var(--tile);
   overflow: hidden;
+  container-type: size;
   animation: rise 1.2s var(--settle) calc(var(--i, 0) * 50ms) backwards;
   transition: transform 0.3s var(--settle);
 }
@@ -337,79 +366,119 @@ a.card:active {
   grid-column: 1 / -1;
   aspect-ratio: 16 / 9;
 }
-.caption {
+/* A hairline just inside the edge, above the media */
+.edge {
   position: absolute;
-  z-index: 1;
-  top: 16px;
-  left: 16px;
-  right: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 14px;
-  line-height: 20px;
-}
-.caption-icon {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 5px;
-}
-.caption-title {
-  font-weight: 500;
-}
-.caption-sub {
-  color: var(--text-2);
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--edge);
+  pointer-events: none;
 }
 .stage {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 0;
-  padding: 60px 32px 32px;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
 }
-.card.full .stage {
-  padding: 64px 12% 40px;
-}
-.shot {
+.reel {
   display: block;
-  width: 100%;
-  max-height: 100%;
+  width: 86%;
   aspect-ratio: var(--ratio, 16 / 9);
   object-fit: cover;
-  border-radius: 10px;
-  background: #000;
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.06), 0 12px 24px -6px rgb(0 0 0 / 0.12), 0 28px 56px -14px rgb(0 0 0 / 0.18);
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgb(39 39 42 / 0.06), 0 12px 24px -6px rgb(39 39 42 / 0.12);
 }
-.shot.portrait {
+.reel.portrait {
   width: auto;
-  height: 100%;
+  height: 78%;
   border-radius: 24px;
+}
+.kind {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 22px;
+  height: 22px;
+  color: #fff;
+  filter: drop-shadow(0 0 0.5px rgb(0 0 0 / 0.45)) drop-shadow(0 1px 2px rgb(0 0 0 / 0.25));
+  pointer-events: none;
+}
+/* The name and the way out show on hover, and always on touch screens */
+.name,
+.actions {
+  position: absolute;
+  bottom: 14px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s var(--ease-out), transform 0.3s var(--ease-out);
+}
+.name {
+  left: 14px;
+  max-width: calc(100% - 120px);
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 19px;
+  background: #fff;
+  font-size: 14px;
+  line-height: 38px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.actions {
+  right: 14px;
+}
+.go {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 15px 0 13px;
+  border-radius: 19px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+}
+.go svg {
+  width: 10px;
+  height: 10px;
+}
+.card:hover .name,
+.card:hover .actions,
+.card:focus-visible .name,
+.card:focus-visible .actions {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: none) {
+  .name,
+  .actions {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* An article or a talk, like a card pinned on the wall */
 .card.post {
-  align-items: center;
-  justify-content: center;
-  padding: 11%;
-  background: var(--fill);
+  display: grid;
+  place-items: center;
 }
 .note {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: min(74%, 440px);
+  border: 1px solid var(--edge);
   border-radius: 14px;
-  background: var(--bg);
-  box-shadow: 0 0 0 1px var(--hairline), 0 8px 24px -12px rgb(0 0 0 / 0.12);
+  background: #fff;
   overflow: hidden;
+  transition: transform 0.5s var(--ease-out);
 }
 .note-picture {
   display: block;
   width: 100%;
-  aspect-ratio: 1.91 / 1;
+  aspect-ratio: 1.91;
   object-fit: cover;
-  background: var(--fill);
+  border-bottom: 1px solid var(--edge);
 }
 .note-type {
   display: flex;
@@ -417,50 +486,62 @@ a.card:active {
   justify-content: center;
   padding: 0 28px;
   font-size: 16px;
-  font-weight: 500;
   line-height: 1.35;
-  letter-spacing: -0.01em;
   text-align: center;
   text-wrap: balance;
 }
 .note-body {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 14px 16px 16px;
+  gap: 10px;
+  padding: 16px 18px 18px;
 }
 .note-meta {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--text-2);
-  font-size: 13px;
-}
-.note-source {
-  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  color: var(--ink-subtle);
+  font-size: 14px;
+}
+.note-meta time {
+  margin-left: auto;
+  color: var(--ink-faint);
 }
 .source-icon {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  image-rendering: pixelated;
 }
 .note-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
+  font-size: 17px;
   line-height: 1.4;
   text-wrap: pretty;
 }
 .note-sub {
-  color: var(--text-2);
+  color: var(--ink-faint);
   font-size: 13px;
+  line-height: 18px;
+}
+/* Short cards drop the picture */
+@container (height <= 330px) {
+  .note-picture {
+    display: none;
+  }
+  .note-body {
+    gap: 14px;
+    padding: 22px;
+  }
 }
 
 /* The rest of the open source projects, in a list */
 .card.list {
   aspect-ratio: auto;
+  container-type: normal;
   padding: 24px 16px;
 }
 .card.list .rows ul {
@@ -475,35 +556,10 @@ a.card:active {
   overflow: hidden;
 }
 
-/* One column: the intro sits above the cards */
-@media (max-width: 1099px) {
-  .home {
-    grid-template-columns: minmax(0, 1fr);
-    max-width: 836px;
-    padding-top: 64px;
-  }
-  .side {
-    position: static;
-    max-width: 560px;
-  }
-  .peek-card {
-    display: none;
-  }
-}
 @media (max-width: 640px) {
   .grid,
   .card.list .rows ul {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .card.full {
-    aspect-ratio: 1;
-  }
-  .card.full .stage {
-    padding: 60px 24px 32px;
-  }
-  .card.post {
-    aspect-ratio: auto;
-    padding: 32px 24px;
   }
 }
 
@@ -865,10 +921,13 @@ textarea.field {
   .chip:not([aria-current]):hover,
   .links a:hover,
   .links button:hover {
-    color: var(--text);
+    color: var(--ink);
   }
   .peek a:hover {
-    text-decoration-color: var(--text-2);
+    text-decoration-color: var(--ink-subtle);
+  }
+  a.card.post:hover .note {
+    transform: scale(1.02);
   }
 }
 @media (hover: hover) and (pointer: fine) {
@@ -933,9 +992,14 @@ textarea.field {
   .card {
     animation: none;
   }
-  .peek-card {
+  .peek-card,
+  .name,
+  .actions {
     transform: none;
     transition: opacity 0.2s ease;
+  }
+  a.card.post:hover .note {
+    transform: none;
   }
   .glass,
   .row.on .row-text {

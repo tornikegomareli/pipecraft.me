@@ -35,11 +35,13 @@ const SHOWN = new Set(WORK.map((w) => w.href.toLowerCase()));
 function Intro({ onContact }: { onContact: () => void }) {
   return (
     <header className="side">
-      <img className="me rise" src="/media/avatar.png" width={42} height={42} alt="" />
-      <div className="who rise" style={{ "--i": 1 } as CSSProperties}>
-        <h1>Tornike Gomareli</h1>
-        <p>Applied AI Engineer</p>
-        <p>macOS, iOS and Apple platforms</p>
+      <div className="who rise">
+        <img className="me" src="/media/avatar.png" width={42} height={42} alt="" />
+        <div>
+          <h1>Tornike Gomareli</h1>
+          <p>Applied AI Engineer</p>
+          <p>macOS, iOS and Apple platforms</p>
+        </div>
       </div>
       <div className="story rise" style={{ "--i": 2 } as CSSProperties}>
         <p>

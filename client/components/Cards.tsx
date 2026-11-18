@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode, useEffect, useRef } from "react";
+import { type CSSProperties, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { type PostItem, formatMonthYear } from "../lib/posts";
 import type { Work } from "../lib/work";
@@ -37,16 +37,19 @@ export function Loop({ name, className }: { name: string; className?: string }) 
   );
 }
 
-function Caption({ icon, title, sub }: { icon?: ReactNode; title: ReactNode; sub: string }) {
-  return (
-    <span className="caption">
-      {icon}
-      <span className="caption-text">
-        <span className="caption-title">{title}</span> <span className="caption-sub">{sub}</span>
-      </span>
-    </span>
-  );
-}
+// The corner mark Guri's cards use for a video
+const VIDEO = (
+  <svg className="kind" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+    <rect x="2.5" y="5" width="14" height="14" rx="3" />
+    <path d="m16.5 10 5-3v10l-5-3" strokeLinejoin="round" />
+  </svg>
+);
+
+const OUT = (
+  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+    <path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 
 export function WorkCard({ work, index }: { work: Work; index: number }) {
   return (
@@ -54,17 +57,19 @@ export function WorkCard({ work, index }: { work: Work; index: number }) {
       href={work.href}
       target="_blank"
       rel="noreferrer"
+      aria-label={`${work.name}: ${work.line}`}
       className={work.wide ? "card full" : "card"}
-      style={{ "--tint": work.tint, "--ratio": work.ratio, "--i": Math.min(index, 10) } as CSSProperties}
+      style={{ "--ratio": work.ratio, "--i": Math.min(index, 10) } as CSSProperties}
     >
-      <Caption
-        icon={work.icon && <img className="caption-icon" src={`/media/icons/${work.key}.png`} alt="" />}
-        title={work.key === "drooop" ? <span className="drooop">drooop</span> : work.name}
-        sub={work.line}
-      />
       <span className="stage">
-        <Loop name={work.media} className={work.portrait ? "shot portrait" : "shot"} />
+        <Loop name={work.media} className={work.portrait ? "reel portrait" : "reel"} />
       </span>
+      {VIDEO}
+      <span className="name">{work.key === "drooop" ? <span className="drooop">drooop</span> : work.name}</span>
+      <span className="actions">
+        <span className="go">Open {OUT}</span>
+      </span>
+      <span className="edge" />
     </a>
   );
 }
@@ -94,16 +99,15 @@ export function PostCard({ post, index }: { post: PostItem; index: number }) {
         )}
         <span className="note-body">
           <span className="note-meta">
-            <span className="note-source">
-              {talk && YOUTUBE}
-              {talk ? "Talk" : post.section === "essays" ? "Essay" : "Post"}
-            </span>
+            {talk ? YOUTUBE : <img className="source-icon" src="/media/avatar.png" alt="" />}
+            {talk ? "YouTube" : post.section === "essays" ? "Essay" : "Post"}
             <time dateTime={post.date}>{formatMonthYear(post.date)}</time>
           </span>
           <span className="note-title">{post.title}</span>
           {!talk && <span className="note-sub">{post.readingTime} min read</span>}
         </span>
       </span>
+      <span className="edge" />
     </Link>
   );
 }

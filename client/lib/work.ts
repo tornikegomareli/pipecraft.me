@@ -6,16 +6,12 @@ export interface Work {
   href: string;
   // A file name in /media: <media>.mp4 plays over its poster, <media>.webp
   media: string;
-  // The app icon in /media/icons/<key>.png
-  icon?: boolean;
   // Phone recordings stand upright in the card
   portrait?: boolean;
   // Width / height of the media when it is not 16 / 9
   ratio?: string;
   // Wide cards take both columns
   wide?: boolean;
-  // The card's surface in light mode
-  tint: string;
 }
 
 export const WORK: Work[] = [
@@ -26,9 +22,7 @@ export const WORK: Work[] = [
     line: "The missing layer between your Mac and iPhone.",
     href: "https://drooop.app",
     media: "drooop",
-    icon: true,
     wide: true,
-    tint: "#f3efe9",
   },
   {
     key: "atlas",
@@ -38,9 +32,7 @@ export const WORK: Work[] = [
     href: "https://atlas.insanearts.io",
     media: "atlas",
     ratio: "16 / 10",
-    icon: true,
     wide: true,
-    tint: "#f4ede3",
   },
   {
     key: "opie",
@@ -49,8 +41,6 @@ export const WORK: Work[] = [
     line: "Every command, one flick away.",
     href: "https://opies.io",
     media: "opie",
-    icon: true,
-    tint: "#e8edf6",
   },
   {
     key: "jolt",
@@ -59,8 +49,6 @@ export const WORK: Work[] = [
     line: "The Mac launcher that understands plain language.",
     href: "https://usejolt.app",
     media: "jolt",
-    icon: true,
-    tint: "#e6eef4",
   },
   {
     key: "talkify",
@@ -70,9 +58,7 @@ export const WORK: Work[] = [
     href: "https://github.com/tornikegomareli/Talkify",
     media: "talkify",
     ratio: "1326 / 546",
-    icon: true,
     wide: true,
-    tint: "#ebe8f4",
   },
   {
     key: "scene",
@@ -81,9 +67,7 @@ export const WORK: Work[] = [
     line: "One theme for your whole Mac.",
     href: "https://github.com/InsaneArts/scene",
     media: "scene",
-    icon: true,
     wide: true,
-    tint: "#f4ebf0",
   },
   {
     key: "omarchy-spaces",
@@ -92,7 +76,6 @@ export const WORK: Work[] = [
     line: "See what runs on every workspace.",
     href: "https://github.com/tornikegomareli/omarchy-spaces",
     media: "omarchy-spaces",
-    tint: "#e7e8eb",
   },
   {
     key: "spacewalk",
@@ -101,8 +84,6 @@ export const WORK: Work[] = [
     line: "Spaces, without the wait.",
     href: "https://github.com/InsaneArts/Spacewalk",
     media: "spacewalk",
-    icon: true,
-    tint: "#ebe9f4",
   },
   {
     key: "herdrbar",
@@ -111,8 +92,6 @@ export const WORK: Work[] = [
     line: "Your agents, in your menu bar.",
     href: "https://github.com/InsaneArts/herdrbar",
     media: "herdrbar",
-    icon: true,
-    tint: "#e6e9ef",
   },
   {
     key: "aurora",
@@ -123,6 +102,5 @@ export const WORK: Work[] = [
     media: "aurora",
     ratio: "443 / 900",
     portrait: true,
-    tint: "#f5e9ef",
   },
 ];

@@ -49,7 +49,6 @@ function Caption({ icon, title, sub }: { icon?: ReactNode; title: ReactNode; sub
 }
 
 export function WorkCard({ work, index }: { work: Work; index: number }) {
-  const shape = work.portrait ? "shot portrait" : "shot";
   return (
     <a
       href={work.href}
@@ -64,11 +63,7 @@ export function WorkCard({ work, index }: { work: Work; index: number }) {
         sub={work.line}
       />
       <span className="stage">
-        {work.still ? (
-          <img className={shape} src={`/media/${work.media}.webp`} alt="" loading="lazy" />
-        ) : (
-          <Loop name={work.media} className={shape} />
-        )}
+        <Loop name={work.media} className={work.portrait ? "shot portrait" : "shot"} />
       </span>
     </a>
   );

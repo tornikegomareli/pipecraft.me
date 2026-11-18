@@ -4,11 +4,10 @@ export interface Work {
   name: string;
   line: string;
   href: string;
-  // A file name in /media: <media>.mp4 plays over <media>.webp, or <media>.webp alone when still
+  // A file name in /media: <media>.mp4 plays over its poster, <media>.webp
   media: string;
   // The app icon in /media/icons/<key>.png
   icon?: boolean;
-  still?: boolean;
   // Phone recordings stand upright in the card
   portrait?: boolean;
   // Width / height of the media when it is not 16 / 9
@@ -93,8 +92,6 @@ export const WORK: Work[] = [
     line: "See what runs on every workspace.",
     href: "https://github.com/tornikegomareli/omarchy-spaces",
     media: "omarchy-spaces",
-    ratio: "16 / 10",
-    still: true,
     tint: "#e7e8eb",
   },
   {

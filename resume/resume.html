@@ -30,10 +30,10 @@
       body {
         width: 210mm;
         height: 297mm;
-        padding: 40px 46px 32px;
+        padding: 36px 42px 28px;
         overflow: hidden;
         color: #4e4e55;
-        font: 400 10.4px/1.5 "Inter", sans-serif;
+        font: 400 10.5px/1.5 "Inter", sans-serif;
       }
       a {
         color: inherit;
@@ -45,6 +45,7 @@
         color: #111;
         font-weight: 600;
       }
+      /* Every name a reader can open is underlined */
       .u {
         text-decoration: underline;
         text-decoration-color: #c7c7cc;
@@ -54,29 +55,47 @@
       header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
+      }
+      .me {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .me img {
+        width: 46px;
+        height: 46px;
       }
       h1 {
         font-size: 19px;
-        line-height: 1.3;
+        line-height: 1.25;
         letter-spacing: -0.01em;
       }
       .role {
-        margin-top: 2px;
-        color: #4e4e55;
-        font-size: 13px;
+        margin-top: 1px;
+        font-size: 12.5px;
       }
       .contact {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 4px 16px;
+      }
+      .contact a {
         display: flex;
-        gap: 16px;
-        padding-top: 5px;
-        font-size: 10.4px;
+        align-items: center;
+        gap: 5px;
+      }
+      .contact img,
+      .contact svg {
+        width: 11px;
+        height: 11px;
+        flex-shrink: 0;
       }
 
       h2 {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         color: #111;
-        font-size: 9.6px;
+        font-size: 9.2px;
         font-weight: 400;
         letter-spacing: 0.06em;
         text-transform: uppercase;
@@ -85,30 +104,29 @@
         margin-top: 18px;
       }
       .summary {
-        margin-top: 22px;
+        margin-top: 20px;
       }
       .summary p {
-        max-width: 640px;
         color: #222;
         font-size: 11.2px;
-        line-height: 1.6;
+        line-height: 1.58;
       }
       .summary p + p {
-        margin-top: 8px;
+        margin-top: 6px;
       }
 
       .cols {
         display: grid;
-        grid-template-columns: 1fr 236px;
-        gap: 34px;
-        margin-top: 22px;
+        grid-template-columns: 1fr 252px;
+        gap: 30px;
+        margin-top: 18px;
       }
 
       .job + .job {
         margin-top: 11px;
       }
       h3 {
-        font-size: 10.8px;
+        font-size: 10.9px;
         line-height: 1.45;
       }
       h3 span {
@@ -116,7 +134,6 @@
         font-weight: 400;
       }
       .when {
-        margin-top: 1px;
         color: #111;
       }
       .when span {
@@ -124,12 +141,12 @@
         color: #8a8a8f;
       }
       ul {
-        margin-top: 4px;
+        margin-top: 3px;
         list-style: none;
       }
       li {
         position: relative;
-        padding-left: 12px;
+        padding-left: 11px;
       }
       li + li {
         margin-top: 2px;
@@ -144,57 +161,55 @@
         border-radius: 50%;
         background: #a1a1a6;
       }
-      .earlier li {
-        padding-left: 0;
-      }
-      .earlier li::before {
-        display: none;
+      .lead {
+        margin-bottom: 4px;
       }
 
       .stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px 12px;
+        gap: 7px 12px;
+        margin-bottom: 10px;
       }
       .stat b {
         display: block;
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.2;
         letter-spacing: -0.01em;
       }
       .stat span {
         color: #8a8a8f;
-        font-size: 9.6px;
+        font-size: 9.2px;
       }
       .repo + .repo {
-        margin-top: 6px;
+        margin-top: 4px;
       }
-      .repo b {
-        font-size: 10.6px;
-      }
-      .repo .n {
+      .n {
         color: #8a8a8f;
       }
+      .nowrap {
+        white-space: nowrap;
+      }
       .group + .group {
-        margin-top: 8px;
+        margin-top: 7px;
       }
       .group h3 {
-        margin-bottom: 1px;
+        margin-bottom: 2px;
       }
       .chips {
         display: flex;
         flex-wrap: wrap;
-        gap: 5px;
+        gap: 4px;
       }
       .chip {
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        padding: 2px 7px 2px 5px;
+        padding: 1.5px 7px 1.5px 5px;
         border: 1px solid #e4e4e7;
         border-radius: 999px;
         color: #222;
-        font-size: 9.6px;
+        font-size: 9.2px;
       }
       .chip img {
         width: 10px;
@@ -204,14 +219,30 @@
   </head>
   <body>
     <header>
-      <div>
-        <h1>Tornike Gomareli</h1>
-        <p class="role">Applied AI Engineer · macOS &amp; iOS</p>
+      <div class="me">
+        <img src="avatar.png" alt="" />
+        <div>
+          <h1>Tornike Gomareli</h1>
+          <p class="role">Applied AI Engineer · macOS &amp; iOS</p>
+        </div>
       </div>
       <div class="contact">
-        <a class="u" href="https://tornikegomareli.com">tornikegomareli.com</a>
-        <a class="u" href="https://x.com/tornikegomareli">x.com/tornikegomareli</a>
-        <a href="mailto:gomarelidevelopment@gmail.com">gomarelidevelopment@gmail.com</a>
+        <a class="u" href="https://tornikegomareli.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" />
+          </svg>
+          tornikegomareli.com
+        </a>
+        <a class="u" href="https://x.com/tornikegomareli"><img src="icons/x.svg" alt="" />tornikegomareli</a>
+        <a href="mailto:gomarelidevelopment@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="3" />
+            <path d="m3 6 9 7 9-7" />
+          </svg>
+          gomarelidevelopment@gmail.com
+        </a>
+        <a class="u" href="https://github.com/tornikegomareli"><img src="icons/github.svg" alt="" />tornikegomareli</a>
       </div>
     </header>
 
@@ -219,13 +250,12 @@
       <h2>Summary</h2>
       <p>
         Apple platforms engineer with 10+ years on iOS and macOS: streaming, audio, graphics, SDKs and consumer
-        apps used by hundreds of thousands of people a day. Today AI agents are my main tool, so I call myself an
-        Applied AI Engineer, but my deepest knowledge is still the Mac, the iPhone and the frameworks under them.
+        apps used by hundreds of thousands of people a day. My deepest knowledge is the Mac, the iPhone and the
+        frameworks under them.
       </p>
       <p>
-        I run <a class="u" href="https://insanearts.io">InsaneArts</a>, a small studio that ships drooop, Opie,
-        Jolt and Atlas. My open source work has 2,500+ GitHub stars and 24,000+ downloads, and Talkify reached
-        #1 Swift Repository of the Day on Trendshift.
+        I do all of my work AI first. I believe AI will change people's lives, and that we must use it for good. I
+        keep improving my workflow, and I am an automation nerd who tries to automate and manage everything.
       </p>
     </section>
 
@@ -235,24 +265,18 @@
           <h2>Work Experience</h2>
 
           <div class="job">
-            <h3>Founder <a class="u" href="https://insanearts.io">@InsaneArts</a> <span>– Apps for the Mac and iPhone</span></h3>
-            <p class="when">May 2026 – Now</p>
-            <ul>
-              <li><b>drooop</b>: the missing layer between the Mac and iPhone. <b>Opie</b>: every command, one flick away.</li>
-              <li><b>Jolt</b>: a Mac launcher that runs commands from plain language, built on TypeSafe's Jev model.</li>
-              <li><b>Atlas</b>: an open source hidden desktop where AI agents test Mac apps. 186 stars two weeks after launch.</li>
-              <li>12 smaller open source tools for the Mac, Omarchy and Apple developers.</li>
-            </ul>
-          </div>
-
-          <div class="job">
-            <h3>Technical Lead, AI &amp; Mobile @Techzy <span>– Products for Coca-Cola</span></h3>
+            <h3>Technical Lead, AI &amp; Mobile <a class="u" href="https://techzy.app">@Techzy</a> <span>– Products for Coca-Cola</span></h3>
             <p class="when">Feb 2025 – Now</p>
             <ul>
-              <li>Coke Rewards: led the iOS architecture of a loyalty app with 300K+ downloads, ~30K daily users and a 4.9 App Store rating.</li>
-              <li>Built a hyper-modular app with The Composable Architecture, and arcade games in SpriteKit and Metal.</li>
-              <li>Coke Red AI: lead a computer vision system that finds products in store fridges. Its ONNX Runtime server makes 600K predictions a day.</li>
-              <li>Built the labeling pipeline for 200K+ images, and the Flutter, React and Bun tools around it.</li>
+              <li>
+                <a class="u" href="https://apps.apple.com/ge/app/coca-cola-rewards-georgia/id6733216376">Coke Rewards</a>:
+                led the iOS architecture of a loyalty app with 300K+ downloads, ~30K daily users and a 4.9 App Store
+                rating. Hyper-modular with The Composable Architecture, with arcade games in SpriteKit and Metal.
+              </li>
+              <li>
+                Coke Red AI: lead a computer vision system that finds products in store fridges. Its ONNX Runtime server
+                makes 600K predictions a day, trained through a labeling pipeline of 200K+ images.
+              </li>
             </ul>
           </div>
 
@@ -274,7 +298,7 @@
           </div>
 
           <div class="job">
-            <h3>Senior iOS Engineer @TNET SuperApp <span>– E-commerce super app</span></h3>
+            <h3>Senior iOS Engineer <a class="u" href="https://tnet.ge">@TNET</a> <span>– E-commerce super app</span></h3>
             <p class="when">Aug 2022 – Sep 2023</p>
             <ul>
               <li>One of 3 iOS engineers. Built the modular architecture, CI/CD and XCUITest automation.</li>
@@ -282,25 +306,52 @@
           </div>
 
           <div class="job">
-            <h3>iOS Engineer @Shopthing <span>– Online shopping platform</span></h3>
+            <h3>iOS Engineer <a class="u" href="https://shopthing.com">@Shopthing</a> <span>– Online shopping platform</span></h3>
             <p class="when">Jul 2022 – Dec 2023<span>Contract</span></p>
             <ul>
               <li>Built the app in SwiftUI and TCA, moved the build to Bazel, and added Maestro end-to-end tests.</li>
             </ul>
           </div>
 
-          <div class="job earlier">
+          <div class="job">
             <h3>Earlier</h3>
             <ul>
-              <li><b>Qarva</b>, iOS/tvOS (2021): live streaming over HLS and multicast, Swift bindings for C99 and C++ engines.</li>
-              <li><b>HalbeStunde</b>, iOS (2020–2021): a virtual piano with AudioToolbox, Core Graphics and Metal.</li>
-              <li><b>Space International</b> (2021–2022), <b>Flat Rock Technology</b> (2019–2021), <b>Upcast</b> (2017–2019), <b>MPDC</b> (2016–2017).</li>
+              <li><a class="u" href="https://qarva.com"><b>Qarva</b></a>, iOS/tvOS (2021): live streaming over HLS and multicast, Swift bindings for C99 and C++ engines.</li>
+              <li><a class="u" href="https://halbestunde.com"><b>HalbeStunde</b></a>, iOS (2020–2021): a virtual piano with AudioToolbox, Core Graphics and Metal.</li>
+              <li>
+                <b>Space International</b> (2021–2022), <a class="u" href="https://flatrocktech.com"><b>Flat Rock Technology</b></a>
+                (2019–2021), <b>Upcast</b> (2017–2019), <b>MPDC</b> (2016–2017).
+              </li>
             </ul>
           </div>
+        </section>
+
+        <section>
+          <h2>Talks &amp; Community</h2>
+          <p class="lead">All my talks and speeches: <a class="u" href="https://tornikegomareli.com/talks">tornikegomareli.com/talks</a></p>
+          <ul>
+            <li>Local-First Mobile: a different way to think about state (2025)</li>
+            <li>Hackers Learn by Building: from zero to eval, creating a Lisp (2025)</li>
+            <li>Are We Replaceable? Software engineering in the age of AI (2024)</li>
+            <li>Host of the <a class="u" href="https://www.youtube.com/@Devtherapy"><b>Devtherapy</b></a> podcast</li>
+            <li>Organizer of <a class="u" href="https://hacktoberfest.ge"><b>Hacktoberfest Georgia</b></a>, a two-day hackathon in Tbilisi</li>
+            <li>Organizer of <b>Apple Developers Georgia</b> meetups</li>
+          </ul>
         </section>
       </div>
 
       <div>
+        <section>
+          <h2>What I'm Building Outside of Work</h2>
+          <p class="lead">Apps for the Mac and iPhone, under <a class="u" href="https://insanearts.io">InsaneArts</a>.</p>
+          <ul>
+            <li><a class="u" href="https://drooop.app"><b>drooop</b></a>: the missing layer between the Mac and iPhone.</li>
+            <li><a class="u" href="https://opies.io"><b>Opie</b></a>: every command, one flick away.</li>
+            <li><a class="u" href="https://usejolt.app"><b>Jolt</b></a>: a Mac launcher that understands plain language.</li>
+            <li><a class="u" href="https://atlas.insanearts.io"><b>Atlas</b></a>: a hidden desktop where AI agents test Mac apps. Open source.</li>
+          </ul>
+        </section>
+
         <section>
           <h2>Open Source</h2>
           <div class="stats">
@@ -309,28 +360,28 @@
             <div class="stat"><b>10,800+</b><span>git clones in 14 days</span></div>
             <div class="stat"><b>#1</b><span>Swift repo of the day</span></div>
           </div>
-        </section>
-
-        <section>
-          <h2>Projects</h2>
           <div class="repo">
-            <b>Talkify</b> <span class="n">599 stars · 5,400+ downloads</span><br />
+            <a class="u" href="https://github.com/tornikegomareli/Talkify"><b>Talkify</b></a>
+            <span class="n">599 stars · 5,400+ downloads</span><br />
             Local voice dictation for macOS. #1 Swift Repository of the Day, #10 of the Week on Trendshift.
           </div>
           <div class="repo">
-            <b>Aurora</b> <span class="n">176 stars · 12,300+ downloads</span><br />
-            The Apple Intelligence glow for SwiftUI, drawn with Metal shaders.
+            <a class="u" href="https://github.com/tornikegomareli/Aurora"><b>Aurora</b></a>
+            <span class="n">176 stars · 12,300+ downloads</span><br />
+            The Apple Intelligence glow for SwiftUI, in Metal.
           </div>
           <div class="repo">
-            <b>Scene</b> <span class="n">251 stars · 2,500+ downloads</span><br />
-            One theme for the desktop, terminals and editors of a Mac.
+            <a class="u" href="https://github.com/InsaneArts/scene"><b>Scene</b></a>
+            <span class="n">251 stars · 2,500+ downloads</span><br />
+            One theme for the whole Mac.
           </div>
           <div class="repo">
-            <b>Spaces for Omarchy</b> <span class="n">234 stars</span><br />
-            Shows the apps open on every Omarchy workspace.
-          </div>
-          <div class="repo">
-            <b>Atlas</b> <span class="n">186 stars</span> · <b>swift-pretextkit</b> <span class="n">188 stars</span>
+            <span class="nowrap"><a class="u" href="https://github.com/tornikegomareli/omarchy-spaces"><b>Spaces for Omarchy</b></a>
+            <span class="n">234 stars</span></span> ·
+            <span class="nowrap"><a class="u" href="https://github.com/tornikegomareli/swift-pretextkit"><b>swift-pretextkit</b></a>
+            <span class="n">188 stars</span></span> ·
+            <span class="nowrap"><a class="u" href="https://github.com/InsaneArts/atlas"><b>Atlas</b></a>
+            <span class="n">186 stars</span></span>
           </div>
         </section>
 
@@ -338,42 +389,39 @@
           <h2>Skills &amp; Tools</h2>
           <div class="group">
             <h3>Apple platforms</h3>
-            <p>Swift / SwiftUI / UIKit / AppKit / Swift Concurrency / Combine / Metal / Core Graphics / AVFoundation / AudioToolbox / SpriteKit</p>
-          </div>
-          <div class="group">
-            <h3>Architecture</h3>
-            <p>The Composable Architecture / Elm-style / Modular apps / SDK design</p>
+            <p>Swift / SwiftUI / UIKit / AppKit / Swift Concurrency / Combine / Metal / Core Graphics / AVFoundation / AudioToolbox / SpriteKit / TCA</p>
           </div>
           <div class="group">
             <h3>AI</h3>
-            <p>Coding agents / On-device LLMs / Computer vision / ONNX Runtime / MCP</p>
+            <p>Agentic workflows / On-device LLMs / Computer vision / ONNX Runtime / MCP</p>
           </div>
           <div class="group">
-            <h3>Tools</h3>
+            <h3>AI tools</h3>
+            <div class="chips">
+              <span class="chip"><img src="icons/claudecode-color.svg" alt="" />Claude Code</span>
+              <span class="chip"><img src="icons/codex-color.svg" alt="" />Codex</span>
+              <span class="chip"><img src="icons/openai.svg" alt="" />ChatGPT</span>
+              <span class="chip"><img src="icons/cursor.svg" alt="" />Cursor</span>
+              <span class="chip"><img src="icons/geminicli-color.svg" alt="" />Gemini CLI</span>
+              <span class="chip"><img src="icons/amp-color.svg" alt="" />Amp</span>
+              <span class="chip"><img src="icons/opencode.svg" alt="" />OpenCode</span>
+              <span class="chip"><img src="icons/mcp.svg" alt="" />MCP</span>
+            </div>
+          </div>
+          <div class="group">
+            <h3>Languages &amp; tools</h3>
             <div class="chips">
               <span class="chip"><img src="icons/swift.svg" alt="" />Swift</span>
               <span class="chip"><img src="icons/xcode.svg" alt="" />Xcode</span>
-              <span class="chip"><img src="icons/claude.svg" alt="" />Claude Code</span>
-              <span class="chip">Codex</span>
               <span class="chip"><img src="icons/rust.svg" alt="" />Rust</span>
               <span class="chip"><img src="icons/zig.svg" alt="" />Zig</span>
               <span class="chip"><img src="icons/typescript.svg" alt="" />TypeScript</span>
               <span class="chip"><img src="icons/kotlin.svg" alt="" />Kotlin</span>
               <span class="chip"><img src="icons/flutter.svg" alt="" />Flutter</span>
               <span class="chip"><img src="icons/bun.svg" alt="" />Bun</span>
-              <span class="chip"><img src="icons/github.svg" alt="" />GitHub</span>
               <span class="chip"><img src="icons/linear.svg" alt="" />Linear</span>
             </div>
           </div>
-        </section>
-
-        <section>
-          <h2>Community</h2>
-          <ul>
-            <li>Host of the <b>Devtherapy</b> podcast</li>
-            <li>Organizer of <b>Apple Developers Georgia</b> meetups</li>
-            <li>Talks on local-first mobile, building a Lisp, and AI in engineering</li>
-          </ul>
         </section>
       </div>
     </div>

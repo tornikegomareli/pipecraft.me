@@ -25,6 +25,7 @@ const MIME_TYPES: Record<string, string> = {
   ".webp": "image/webp",
   ".ico": "image/x-icon",
   ".pdf": "application/pdf",
+  ".mp4": "video/mp4",
   ".woff": "font/woff",
   ".woff2": "font/woff2",
 };
@@ -41,6 +42,21 @@ async function serveStatic(filePath: string): Promise<Response | null> {
     });
   }
   return null;
+}
+
+// Safari plays a video only when the server answers byte range requests
+function fileResponse(file: ReturnType<typeof Bun.file>, path: string, range: string | null): Response {
+  const headers: Record<string, string> = { "content-type": getMime(path), "accept-ranges": "bytes" };
+  const match = range?.match(/^bytes=(\d*)-(\d*)$/);
+  if (!match || (!match[1] && !match[2])) return new Response(file, { headers });
+  const size = file.size;
+  const start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
+  const end = match[1] && match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
+  if (start > end || start >= size) {
+    return new Response(null, { status: 416, headers: { "content-range": `bytes */${size}` } });
+  }
+  headers["content-range"] = `bytes ${start}-${end}/${size}`;
+  return new Response(file.slice(start, end + 1), { status: 206, headers });
 }
 
 // Posts change only on deploy, so link previews read them once
@@ -134,21 +150,13 @@ const app = new Elysia()
     if (hasDistBuild) {
       const distFile = join(distPath, path);
       const file = Bun.file(distFile);
-      if (await file.exists()) {
-        return new Response(file, {
-          headers: { "content-type": getMime(distFile) },
-        });
-      }
+      if (await file.exists()) return fileResponse(file, distFile, request.headers.get("range"));
     }
 
     // Try public (images, favicon, etc.)
     const publicFile = join(publicPath, path);
     const file = Bun.file(publicFile);
-    if (await file.exists()) {
-      return new Response(file, {
-        headers: { "content-type": getMime(publicFile) },
-      });
-    }
+    if (await file.exists()) return fileResponse(file, publicFile, request.headers.get("range"));
 
     // SPA fallback for client-side routes
     if (hasDistBuild && !extname(path)) {

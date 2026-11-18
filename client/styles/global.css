@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   --bg: #ffffff;
@@ -86,23 +86,6 @@
     1.0001,
     1
   );
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #09090b;
-    --text: #fafafa;
-    --text-2: #a1a1aa;
-    --line: #3f3f46;
-    --line-strong: #71717a;
-    --fill: #18181b;
-    --hairline: rgb(255 255 255 / 0.1);
-    --glass: linear-gradient(#232326, #1b1b1e);
-    --glass-edge: rgb(255 255 255 / 0.07);
-    --glass-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 4px 14px -10px rgb(0 0 0 / 0.9), 0 11px 28px -10px
-      rgb(0 0 0 / 0.6);
-    --sheet-shadow: 0 24px 64px -16px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(255 255 255 / 0.08);
-  }
 }
 
 *,
@@ -492,18 +475,6 @@ a.card:active {
   overflow: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  .card {
-    background: var(--fill);
-  }
-  .card.post .note {
-    background: #111113;
-  }
-  .peek-icon.mono {
-    filter: invert(1);
-  }
-}
-
 /* One column: the intro sits above the cards */
 @media (max-width: 1099px) {
   .home {
@@ -797,11 +768,6 @@ html:has(.sheet[open]) {
 .sheet::backdrop {
   background: rgb(0 0 0 / 0.2);
   animation: fade-in 0.3s ease-out backwards;
-}
-@media (prefers-color-scheme: dark) {
-  .sheet::backdrop {
-    background: rgb(0 0 0 / 0.56);
-  }
 }
 .sheet-body {
   position: relative;

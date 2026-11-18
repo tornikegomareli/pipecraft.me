@@ -4,13 +4,11 @@ import { type PointerEvent, type ReactNode, useRef } from "react";
 interface Props {
   href: string;
   icon: string;
-  // A black logo, drawn white in dark mode
-  mono?: boolean;
   media?: string;
   children: ReactNode;
 }
 
-export default function Peek({ href, icon, mono, media, children }: Props) {
+export default function Peek({ href, icon, media, children }: Props) {
   const video = useRef<HTMLVideoElement>(null);
 
   const enter = (e: PointerEvent) => {
@@ -26,7 +24,7 @@ export default function Peek({ href, icon, mono, media, children }: Props) {
         onPointerEnter={enter}
         onPointerLeave={() => video.current?.pause()}
       >
-        <img className={mono ? "peek-icon mono" : "peek-icon"} src={icon} alt="" />
+        <img className="peek-icon" src={icon} alt="" />
         {children}
       </a>
       {media && (

@@ -1,5 +1,4 @@
 import { type CSSProperties, type PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
 export interface Row {
@@ -9,8 +8,6 @@ export interface Row {
   to?: string;
   href?: string;
   onClick?: () => void;
-  // Image shown beside the list while the row is hovered (wide screens with a mouse only)
-  preview?: string;
 }
 
 interface Box {
@@ -25,16 +22,13 @@ const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(mi
 const edge = (v: number) => Math.sign(v) * (1 - Math.sqrt(1 - Math.abs(v)));
 
 // A list of two-line rows. With a mouse, a glass pill slides to the hovered row and tilts
-// toward the pointer, and the row's preview image blurs in beside the list.
+// toward the pointer.
 export default function Rows({ rows }: { rows: Row[] }) {
-  const listRef = useRef<HTMLDivElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
   const glassRef = useRef<HTMLSpanElement>(null);
   const box = useRef<Box | null>(null);
   const hideTimer = useRef(0);
   const [active, setActive] = useState<number | null>(null);
-  const [armed, setArmed] = useState(false);
-  const [previewTop, setPreviewTop] = useState(0);
 
   useEffect(() => () => clearTimeout(hideTimer.current), []);
 
@@ -57,8 +51,6 @@ export default function Rows({ rows }: { rows: Row[] }) {
       pill.classList.add("on");
     }
 
-    const first = listRef.current?.querySelector(".row")?.getBoundingClientRect().top ?? 0;
-    setPreviewTop(Math.max(first, (window.innerHeight - 225) / 2));
     setActive(index);
   };
 
@@ -95,16 +87,8 @@ export default function Rows({ rows }: { rows: Row[] }) {
     e.currentTarget.style.removeProperty("--shift-y");
   };
 
-  const previews = rows.some((r) => r.preview);
-
   return (
-    <div
-      ref={listRef}
-      className="rows"
-      onPointerEnter={(e) => e.pointerType === "mouse" && setArmed(true)}
-      onPointerMove={tilt}
-      onPointerLeave={flatten}
-    >
+    <div className="rows" onPointerMove={tilt} onPointerLeave={flatten}>
       <span ref={pillRef} className="pill" aria-hidden="true">
         <span ref={glassRef} className="glass" />
       </span>
@@ -141,17 +125,6 @@ export default function Rows({ rows }: { rows: Row[] }) {
           );
         })}
       </ul>
-      {armed &&
-        previews &&
-        createPortal(
-          <div className="previews" style={{ top: previewTop }} aria-hidden="true">
-            {rows.map(
-              (r, i) =>
-                r.preview && <img key={r.key} src={r.preview} alt="" className={active === i ? "on" : undefined} />,
-            )}
-          </div>,
-          document.body,
-        )}
     </div>
   );
 }

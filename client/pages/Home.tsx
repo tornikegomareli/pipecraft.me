@@ -1,219 +1,151 @@
-import { type CSSProperties, type MouseEvent, useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { type CSSProperties, type ReactNode, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { PostCard, WorkCard } from "../components/Cards";
 import ContactModal from "../components/ContactModal";
-import Loading from "../components/Loading";
-import Rows, { type Row } from "../components/Rows";
-import { load, useFetch } from "../hooks/useFetch";
-import { type PostsBySection, formatMonthYear, writing } from "../lib/posts";
+import Peek from "../components/Peek";
+import Rows from "../components/Rows";
+import { useFetch } from "../hooks/useFetch";
+import { type PostsBySection, writing } from "../lib/posts";
+import { WORK } from "../lib/work";
 
-const TABS = [
-  { path: "/", label: "Apps" },
+const FILTERS = [
+  { path: "/", label: "All" },
+  { path: "/apps", label: "Apps" },
+  { path: "/oss", label: "Open source" },
   { path: "/writing", label: "Writing" },
   { path: "/talks", label: "Talks" },
-  { path: "/oss", label: "Open source" },
-  { path: "/about", label: "About" },
 ];
 
-const APPS: Row[] = [
-  {
-    key: "drooop",
-    title: <span className="drooop">drooop</span>,
-    sub: "The missing layer between your Mac and iPhone.",
-    href: "https://drooop.app",
-    preview: "/previews/drooop.webp",
-  },
-  {
-    key: "opie",
-    title: "Opie",
-    sub: "Your actions, around the cursor.",
-    href: "https://opies.io",
-    preview: "/previews/opie.webp",
-  },
-  {
-    key: "jolt",
-    title: "Jolt",
-    sub: "The intelligent launcher for your Mac.",
-    href: "https://usejolt.app",
-    preview: "/previews/jolt.webp",
-  },
-  {
-    key: "talkify",
-    title: "Talkify",
-    sub: "Speak. It's written.",
-    href: "https://usetalkify.app",
-    preview: "/previews/talkify.webp",
-  },
-];
-
-const LINKS: Row[] = [
-  { key: "x", title: "X", href: "https://x.com/tornikegomareli" },
-  { key: "github", title: "GitHub", href: "https://github.com/tornikegomareli" },
-  { key: "linkedin", title: "LinkedIn", href: "https://www.linkedin.com/in/tornikegomareli" },
-  { key: "youtube", title: "YouTube", href: "https://www.youtube.com/@Devtherapy" },
+const LINKS = [
+  { label: "X", href: "https://x.com/tornikegomareli" },
+  { label: "GitHub", href: "https://github.com/tornikegomareli" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/tornikegomareli" },
+  { label: "YouTube", href: "https://www.youtube.com/@Devtherapy" },
 ];
 
 interface Repo {
   name: string;
   description: string | null;
   html_url: string;
+  stargazers_count: number;
 }
 
-function Writing() {
-  const { data, loading } = useFetch<PostsBySection>("/api/posts");
-  if (loading) return <Loading />;
-  return (
-    <Rows
-      rows={writing(data).map((p) => ({
-        key: `${p.section}/${p.slug}`,
-        title: p.title,
-        sub: formatMonthYear(p.date),
-        to: `/${p.section}/${p.slug}`,
-      }))}
-    />
-  );
-}
+const SHOWN = new Set(WORK.map((w) => w.href.toLowerCase()));
 
-function Talks() {
-  const { data, loading } = useFetch<PostsBySection>("/api/posts");
-  if (loading) return <Loading />;
+function Intro({ onContact }: { onContact: () => void }) {
   return (
-    <Rows
-      rows={(data?.talks ?? []).map((t) => ({
-        key: t.slug,
-        title: t.title,
-        sub: formatMonthYear(t.date),
-        to: `/talks/${t.slug}`,
-        preview: t.youtubeId && `https://i.ytimg.com/vi_webp/${t.youtubeId}/maxresdefault.webp`,
-      }))}
-    />
-  );
-}
-
-function OpenSource() {
-  const { data, loading } = useFetch<Repo[]>("/api/projects");
-  if (loading) return <Loading />;
-  return (
-    <Rows
-      rows={(data ?? []).map((r) => ({
-        key: r.name,
-        title: r.name,
-        sub: r.description ?? undefined,
-        href: r.html_url,
-      }))}
-    />
-  );
-}
-
-function About({ onContact }: { onContact: () => void }) {
-  return (
-    <>
-      <div className="bio rise">
-        <p>
-          I'm an engineer and builder with 10+ years of experience building things I care about. These days, I build
-          alongside AI agents. I like to call myself an <strong>Applied AI Engineer</strong> because I'm fascinated by
-          the idea that AI can amplify my skills tenfold, push the boundaries of what I can create, and help me build
-          things that genuinely improve everyday life.
-        </p>
-        <p>
-          I believe AI should help us build better software, not more software. There's already enough slop in the
-          world. I care deeply about the craft, the tiny details most people won't notice, the feeling of a product, and
-          the thought behind every interaction. I love understanding how things work, challenging what's possible, and
-          turning ambitious ideas into something real.
-        </p>
-        <p>At the end of the day, I just love building. And I love every second of it.</p>
+    <header className="side">
+      <img className="me rise" src="/media/avatar.png" width={42} height={42} alt="" />
+      <div className="who rise" style={{ "--i": 1 } as CSSProperties}>
+        <h1>Tornike Gomareli</h1>
+        <p>Applied AI Engineer</p>
+        <p>macOS, iOS and Apple platforms</p>
       </div>
-      <Rows rows={[{ key: "email", title: "Email", onClick: onContact }, ...LINKS]} />
-    </>
+      <div className="story rise" style={{ "--i": 2 } as CSSProperties}>
+        <p>
+          Now{" "}
+          <Peek href="https://insanearts.io" icon="/media/icons/insanearts.svg" mono>
+            InsaneArts
+          </Peek>
+          , making{" "}
+          <Peek href="https://drooop.app" icon="/media/icons/drooop.png" media="drooop">
+            <span className="drooop">drooop</span>
+          </Peek>
+          ,{" "}
+          <Peek href="https://opies.io" icon="/media/icons/opie.png" media="opie">
+            Opie
+          </Peek>
+          ,{" "}
+          <Peek href="https://usejolt.app" icon="/media/icons/jolt.png" media="jolt">
+            Jolt
+          </Peek>{" "}
+          and{" "}
+          <Peek href="https://atlas.insanearts.io" icon="/media/icons/atlas.png" media="atlas">
+            Atlas
+          </Peek>{" "}
+          for the Mac and iPhone.
+        </p>
+        <p>Also Technical Lead at Techzy, on AI, machine learning and mobile.</p>
+        <p>Before, Lead iOS Engineer at Bank of Georgia, on an app with 700,000 daily users.</p>
+        <p>Way before, streaming, audio and graphics on iOS and tvOS.</p>
+        <p>On the side, open source with 2,500+ stars, the Devtherapy podcast and Apple Developers Georgia.</p>
+      </div>
+      <nav className="links rise" style={{ "--i": 3 } as CSSProperties} aria-label="Contact">
+        <button type="button" onClick={onContact}>
+          Email
+        </button>
+        {LINKS.map((l) => (
+          <a key={l.label} href={l.href} target="_blank" rel="noreferrer">
+            {l.label}
+          </a>
+        ))}
+      </nav>
+    </header>
   );
 }
 
 export default function Home() {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const [target, setTarget] = useState<string | null>(null);
-  const [switched, setSwitched] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const targetRef = useRef("");
-  const leaving = useRef(false);
-  const active = target ?? pathname;
+  const { data: posts } = useFetch<PostsBySection>("/api/posts");
+  const { data: repos } = useFetch<Repo[]>("/api/projects");
+  const filter = FILTERS.some((f) => f.path === pathname) ? pathname : "/";
+  const all = filter === "/";
 
-  // Every tab then opens without a loading state
-  useEffect(() => {
-    load("/api/posts").catch(() => {});
-    load("/api/projects").catch(() => {});
-  }, []);
-
-  const finish = () => {
-    leaving.current = false;
-    // Skip if the visitor left the page while the tab faded out
-    if (!contentRef.current) return;
-    setSwitched(true);
-    setTarget(null);
-    navigate(targetRef.current);
-  };
-
-  // The marker moves at once; the old tab blurs out, then the new one blurs in
-  const select = (e: MouseEvent<HTMLAnchorElement>, path: string) => {
-    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    e.preventDefault();
-    if (path === active) return;
-    setTarget(path);
-    targetRef.current = path;
-    if (leaving.current) return;
-    const content = contentRef.current;
-    if (!content || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      finish();
-      return;
+  let i = 0;
+  const cards: ReactNode[] = [];
+  for (const work of WORK) {
+    if (all || (filter === "/apps" && work.kind === "app") || (filter === "/oss" && work.kind === "oss")) {
+      cards.push(<WorkCard key={work.key} work={work} index={i++} />);
     }
-    leaving.current = true;
-    const fadeOut = { opacity: 0, filter: "blur(6px)" };
-    const timing: KeyframeAnimationOptions = { duration: 240, easing: "cubic-bezier(0.4, 0, 1, 1)", fill: "forwards" };
-    // The hovered row's preview lives outside the content, so it fades on its own
-    document.querySelector(".previews")?.animate(fadeOut, timing);
-    content.animate(fadeOut, timing).finished.then(finish, finish);
-  };
-
-  const tab =
-    pathname === "/writing" ? (
-      <Writing />
-    ) : pathname === "/talks" ? (
-      <Talks />
-    ) : pathname === "/oss" ? (
-      <OpenSource />
-    ) : pathname === "/about" ? (
-      <About onContact={() => setContactOpen(true)} />
-    ) : (
-      <Rows rows={APPS} />
+  }
+  const more = (repos ?? [])
+    .filter((r) => !SHOWN.has(r.html_url.toLowerCase()))
+    .sort((a, b) => b.stargazers_count - a.stargazers_count)
+    .slice(0, 12);
+  if ((all || filter === "/oss") && more.length) {
+    cards.push(
+      <div key="more" className="card full list" style={{ "--i": i++ } as CSSProperties}>
+        <Rows
+          rows={[
+            ...more.map((r) => ({
+              key: r.name,
+              title: r.name,
+              sub: [`${r.stargazers_count.toLocaleString("en-US")} stars`, r.description].filter(Boolean).join(" · "),
+              href: r.html_url,
+            })),
+            { key: "all", title: "Everything on GitHub", href: "https://github.com/tornikegomareli?tab=repositories" },
+          ]}
+        />
+      </div>,
     );
+  }
+  if (all || filter === "/writing") {
+    for (const post of writing(posts))
+      cards.push(<PostCard key={`${post.section}/${post.slug}`} post={post} index={i++} />);
+  }
+  if (all || filter === "/talks") {
+    for (const talk of posts?.talks ?? []) cards.push(<PostCard key={`talks/${talk.slug}`} post={talk} index={i++} />);
+  }
 
   return (
-    <div className="enter">
-      <header className="intro rise">
-        <h1>Tornike Gomareli</h1>
-        <p>Making software which feels truly crafted</p>
-      </header>
-      <nav className="tabs rise" style={{ "--i": 1 } as CSSProperties} aria-label="Sections">
-        {TABS.map((t) => (
-          <Link
-            key={t.path}
-            to={t.path}
-            onClick={(e) => select(e, t.path)}
-            aria-current={t.path === active ? "page" : undefined}
-          >
-            {t.label}
-          </Link>
-        ))}
-      </nav>
-      {/* On the first visit the rows wait for the header to rise; after a tab switch they start at once */}
-      <div
-        ref={contentRef}
-        key={pathname}
-        className={switched ? "tab tab-in" : "tab"}
-        style={{ "--base": switched ? "0ms" : "160ms" } as CSSProperties}
-      >
-        {tab}
-      </div>
+    <div className="home enter">
+      <Intro onContact={() => setContactOpen(true)} />
+      <main className="feed">
+        <nav className="chips rise" style={{ "--i": 1 } as CSSProperties} aria-label="Filter">
+          {FILTERS.map((f) => (
+            <Link key={f.path} to={f.path} className="chip" aria-current={f.path === filter ? "page" : undefined}>
+              {f.label}
+            </Link>
+          ))}
+          <a className="chip" href="/resume.pdf" target="_blank" rel="noreferrer">
+            Resume
+          </a>
+        </nav>
+        <div key={filter} className="grid">
+          {cards}
+        </div>
+      </main>
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </div>
   );

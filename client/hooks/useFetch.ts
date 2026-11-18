@@ -11,7 +11,7 @@ interface FetchState<T> {
 const cache = new Map<string, unknown>();
 const pending = new Map<string, Promise<unknown>>();
 
-export function load(url: string): Promise<unknown> {
+function load(url: string): Promise<unknown> {
   let request = pending.get(url);
   if (!request) {
     request = fetch(url)

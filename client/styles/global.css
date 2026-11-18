@@ -195,70 +195,345 @@ ul {
 .enter {
   animation: blur-in 0.7s ease-out backwards;
 }
-.tab-in {
-  animation: blur-in-soft 0.7s ease-out backwards;
-}
 .rise {
   animation: rise 1.4s var(--settle) calc(var(--base, 0ms) + var(--i, 0) * 80ms) backwards;
 }
 
 /* ---------- Home ---------- */
-.intro {
+/* The intro stays on the left while the cards scroll past it */
+.home {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) minmax(0, 788px);
+  gap: 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px max(24px, env(safe-area-inset-right)) 96px max(24px, env(safe-area-inset-left));
+}
+.side {
+  position: sticky;
+  z-index: 2;
+  top: 24px;
+  align-self: start;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 28px;
+  max-width: 440px;
+  padding: 0 10px;
 }
-.intro h1 {
+.me {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+}
+.who {
+  display: flex;
+  flex-direction: column;
+  margin-top: -8px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.who h1 {
   font-size: inherit;
   font-weight: 500;
 }
-.tabs {
-  display: flex;
-  gap: 24px;
-  margin: 42px 0 -6px;
-}
-.tabs a {
-  position: relative;
-  flex-shrink: 0;
-  padding: 6px 0;
+.who p {
   color: var(--text-2);
-  transition: color 0.2s ease;
 }
-.tabs a[aria-current="page"] {
-  color: var(--text);
-}
-/* The marker leaves the old tab blurred, and rises into the new one */
-.tabs a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 1px;
-  height: 2px;
-  border-radius: 1px;
-  background: var(--line);
-  opacity: 0;
-  filter: blur(6px);
-  transform: translateY(12px);
-  transition: opacity 0.24s cubic-bezier(0.4, 0, 1, 1), filter 0.24s cubic-bezier(0.4, 0, 1, 1), transform 0s 0.24s;
-}
-.tabs a[aria-current="page"]::after {
-  opacity: 1;
-  filter: none;
-  transform: none;
-  transition: opacity 0.7s ease-out, filter 0.7s ease-out, transform 0.8s var(--settle);
-}
-.tab {
-  margin-top: 48px;
-}
-.bio {
+.story {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 40px;
-}
-.bio p {
+  gap: 12px;
   line-height: 1.65;
+  text-wrap: pretty;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 18px;
+  color: var(--text-2);
+}
+.links a,
+.links button {
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+/* A link in running text, with the app's icon and a demo beside it on hover */
+.peek {
+  position: relative;
+  white-space: nowrap;
+}
+.peek a {
+  text-decoration: underline dotted var(--line-strong);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.peek-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0 4px 0 1px;
+  border-radius: 4px;
+  vertical-align: -3px;
+}
+.peek-card {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: calc(100% + 12px);
+  width: 288px;
+  aspect-ratio: 16 / 9;
+  margin-top: -81px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: var(--sheet-shadow);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-6px) scale(0.98);
+  transform-origin: left center;
+  transition: opacity 0.18s ease-out, transform 0.18s var(--settle);
+}
+.peek-card video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feed {
+  min-width: 0;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.chip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 22px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--settle);
+}
+.chip[aria-current="page"] {
+  background: var(--text);
+  color: var(--bg);
+}
+.chip:active {
+  transform: scale(0.96);
+  transition-duration: 0.05s;
+}
+
+/* ---------- Cards ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: 12px;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1;
+  border-radius: 20px;
+  background: var(--tint, var(--fill));
+  overflow: hidden;
+  animation: rise 1.2s var(--settle) calc(var(--i, 0) * 50ms) backwards;
+  transition: transform 0.3s var(--settle);
+}
+a.card:active {
+  transform: scale(0.99);
+  transition-duration: 0.05s;
+}
+.card.full {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+}
+.caption {
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.caption-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+.caption-title {
+  font-weight: 500;
+}
+.caption-sub {
+  color: var(--text-2);
+}
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 60px 32px 32px;
+}
+.card.full .stage {
+  padding: 64px 12% 40px;
+}
+.shot {
+  display: block;
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: var(--ratio, 16 / 9);
+  object-fit: cover;
+  border-radius: 10px;
+  background: #000;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.06), 0 12px 24px -6px rgb(0 0 0 / 0.12), 0 28px 56px -14px rgb(0 0 0 / 0.18);
+}
+.shot.portrait {
+  width: auto;
+  height: 100%;
+  border-radius: 24px;
+}
+
+/* An article or a talk, like a card pinned on the wall */
+.card.post {
+  align-items: center;
+  justify-content: center;
+  padding: 11%;
+  background: var(--fill);
+}
+.note {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 14px;
+  background: var(--bg);
+  box-shadow: 0 0 0 1px var(--hairline), 0 8px 24px -12px rgb(0 0 0 / 0.12);
+  overflow: hidden;
+}
+.note-picture {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.91 / 1;
+  object-fit: cover;
+  background: var(--fill);
+}
+.note-type {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
+}
+.note-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px 16px;
+}
+.note-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text-2);
+  font-size: 13px;
+}
+.note-source {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.source-icon {
+  width: 16px;
+  height: 16px;
+}
+.note-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.note-sub {
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+/* The rest of the open source projects, in a list */
+.card.list {
+  aspect-ratio: auto;
+  padding: 24px 16px;
+}
+.card.list .rows ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+.card.list .row-sub {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    background: var(--fill);
+  }
+  .card.post .note {
+    background: #111113;
+  }
+  .peek-icon.mono {
+    filter: invert(1);
+  }
+}
+
+/* One column: the intro sits above the cards */
+@media (max-width: 1099px) {
+  .home {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 836px;
+    padding-top: 64px;
+  }
+  .side {
+    position: static;
+    max-width: 560px;
+  }
+  .peek-card {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .grid,
+  .card.list .rows ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .card.full {
+    aspect-ratio: 1;
+  }
+  .card.full .stage {
+    padding: 60px 24px 32px;
+  }
+  .card.post {
+    aspect-ratio: auto;
+    padding: 32px 24px;
+  }
 }
 
 /* ---------- Rows ---------- */
@@ -335,37 +610,6 @@ ul {
   background: var(--glass);
   box-shadow: var(--glass-shadow);
   transition: transform 0.5s var(--settle);
-}
-
-/* Preview images, in a portal beside the list */
-.previews {
-  position: fixed;
-  z-index: 1;
-  left: calc(50% + 120px);
-  width: 400px;
-  pointer-events: none;
-}
-.previews img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-radius: 10px;
-  opacity: 0;
-  filter: blur(10px);
-  transform: scale(0.97);
-  transition: opacity 0.6s var(--settle), filter 0.6s var(--settle), transform 0.6s var(--settle);
-}
-.previews img.on {
-  opacity: 1;
-  filter: none;
-  transform: none;
-}
-/* Below this width the image would cover the list */
-@media (max-width: 1119px) {
-  .previews {
-    display: none;
-  }
 }
 
 .loading {
@@ -447,7 +691,6 @@ ul {
 .prose > :first-child {
   margin-top: 0;
 }
-.bio strong,
 .prose strong {
   font-weight: 600;
 }
@@ -653,8 +896,20 @@ textarea.field {
 
 /* ---------- Hover (pointer devices only, so taps don't leave stuck states) ---------- */
 @media (hover: hover) {
-  .tabs a:hover {
+  .chip:not([aria-current]):hover,
+  .links a:hover,
+  .links button:hover {
     color: var(--text);
+  }
+  .peek a:hover {
+    text-decoration-color: var(--text-2);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .peek a:hover + .peek-card {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.12s;
   }
   .prose a:hover,
   .article-foot a:hover,
@@ -671,12 +926,6 @@ textarea.field {
   from {
     opacity: 0;
     filter: blur(8px);
-  }
-}
-@keyframes blur-in-soft {
-  from {
-    opacity: 0;
-    filter: blur(6px);
   }
 }
 @keyframes rise {
@@ -704,25 +953,23 @@ textarea.field {
 }
 
 /* ---------- Phone ---------- */
-/* Five tabs fit side by side down to 375px; narrower screens scroll them */
 @media (max-width: 420px) {
   .page {
     padding-left: max(24px, env(safe-area-inset-left));
     padding-right: max(24px, env(safe-area-inset-right));
   }
-  .tabs {
-    gap: 20px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .enter,
-  .tab-in,
   .rise,
-  .row {
+  .row,
+  .card {
     animation: none;
+  }
+  .peek-card {
+    transform: none;
+    transition: opacity 0.2s ease;
   }
   .glass,
   .row.on .row-text {
@@ -730,17 +977,6 @@ textarea.field {
   }
   .pill,
   .pill.on {
-    transition: opacity 0.2s ease;
-  }
-  .tabs a::after,
-  .tabs a[aria-current="page"]::after {
-    filter: none;
-    transform: none;
-    transition: opacity 0.2s ease;
-  }
-  .previews img {
-    filter: none;
-    transform: none;
     transition: opacity 0.2s ease;
   }
   .sheet {

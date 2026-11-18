@@ -43,32 +43,39 @@ function Intro({ onContact }: { onContact: () => void }) {
       </div>
       <div className="story rise" style={{ "--i": 2 } as CSSProperties}>
         <p>
-          Now{" "}
-          <Peek href="https://insanearts.io" icon="/media/icons/insanearts.svg" mono>
-            InsaneArts
-          </Peek>
-          , making{" "}
+          Now building{" "}
           <Peek href="https://drooop.app" icon="/media/icons/drooop.png" media="drooop">
             <span className="drooop">drooop</span>
           </Peek>
           ,{" "}
-          <Peek href="https://opies.io" icon="/media/icons/opie.png" media="opie">
-            Opie
+          <Peek href="https://atlas.insanearts.io" icon="/media/icons/atlas.png" media="atlas">
+            Atlas
           </Peek>
           ,{" "}
+          <Peek href="https://opies.io" icon="/media/icons/opie.png" media="opie">
+            Opie
+          </Peek>{" "}
+          and{" "}
           <Peek href="https://usejolt.app" icon="/media/icons/jolt.png" media="jolt">
             Jolt
           </Peek>{" "}
-          and{" "}
-          <Peek href="https://atlas.insanearts.io" icon="/media/icons/atlas.png" media="atlas">
-            Atlas
-          </Peek>{" "}
-          for the Mac and iPhone.
+          at{" "}
+          <Peek href="https://insanearts.io" icon="/media/icons/insanearts.svg">
+            InsaneArts
+          </Peek>
+          , small apps for the Mac and iPhone that sweat the details nobody asks for.
         </p>
-        <p>Also Technical Lead at Techzy, on AI, machine learning and mobile.</p>
-        <p>Before, Lead iOS Engineer at Bank of Georgia, on an app with 700,000 daily users.</p>
-        <p>Way before, streaming, audio and graphics on iOS and tvOS.</p>
-        <p>On the side, open source with 2,500+ stars, the Devtherapy podcast and Apple Developers Georgia.</p>
+        <p>
+          By day, Technical Lead at Techzy, teaching cameras to spot every Coca-Cola bottle in a fridge, 600,000 times a
+          day.
+        </p>
+        <p>Before, I rebuilt the home screen of Bank of Georgia's app, used by 700,000 people every day.</p>
+        <p>Way before, live TV streaming, a virtual piano and Metal graphics on iOS and tvOS.</p>
+        <p>I work AI first and automate everything I can.</p>
+        <p>
+          On the side, open source with 2,500+ stars, the Devtherapy podcast, Apple Developers Georgia and Hacktoberfest
+          Georgia.
+        </p>
       </div>
       <nav className="links rise" style={{ "--i": 3 } as CSSProperties} aria-label="Contact">
         <button type="button" onClick={onContact}>

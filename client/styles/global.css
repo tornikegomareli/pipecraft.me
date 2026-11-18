@@ -452,83 +452,138 @@ a.card:active {
   }
 }
 
-/* An article or a talk, like a card pinned on the wall */
-.card.post {
+/* Writing: one list, with the hovered article's picture beside it */
+.card.ix,
+.card.ts {
+  aspect-ratio: auto;
+  container-type: inline-size;
+  padding: 28px;
+}
+.card.ix {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+.ix-list {
+  flex: 1;
+  min-width: 0;
+}
+.ix-head {
+  margin-bottom: 12px;
+  color: var(--ink-faint);
+  font-size: 14px;
+}
+.ix-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--edge);
+}
+.ix-title {
+  flex: 1;
+  min-width: 0;
+  color: var(--ink-subtle);
+  line-height: 1.4;
+  text-wrap: pretty;
+  transition: color 0.15s ease-out;
+}
+.ix-row.on .ix-title {
+  color: var(--ink);
+}
+.ix-date,
+.ts-date {
+  color: var(--ink-faint);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ix-preview {
+  position: sticky;
+  top: 24px;
+  flex: 0 0 44%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  outline: 1px solid rgb(0 0 0 / 0.1);
+  outline-offset: -1px;
+}
+.ix-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ix-quote {
   display: grid;
   place-items: center;
-}
-.note {
-  display: flex;
-  flex-direction: column;
-  width: min(74%, 440px);
-  border: 1px solid var(--edge);
-  border-radius: 14px;
-  background: #fff;
-  overflow: hidden;
-  transition: transform 0.5s var(--ease-out);
-}
-.note-picture {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1.91;
-  object-fit: cover;
-  border-bottom: 1px solid var(--edge);
-}
-.note-type {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 28px;
-  font-size: 16px;
-  line-height: 1.35;
+  height: 100%;
+  padding: 32px;
+  font-size: 22px;
+  line-height: 1.25;
   text-align: center;
   text-wrap: balance;
 }
-.note-body {
+
+/* Talks: one row of thumbnails */
+.ts-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.ts-item {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 16px 18px 18px;
-}
-.note-meta {
-  display: flex;
-  align-items: center;
   gap: 8px;
-  color: var(--ink-subtle);
-  font-size: 14px;
 }
-.note-meta time {
-  margin-left: auto;
-  color: var(--ink-faint);
+.ts-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
 }
-.source-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 5px;
-  image-rendering: pixelated;
+.ts-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  outline: 1px solid rgb(0 0 0 / 0.1);
+  outline-offset: -1px;
+  transition: transform 0.5s var(--ease-out);
 }
-.note-title {
+.ts-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.92);
+  color: var(--ink);
+  pointer-events: none;
+}
+.ts-play svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+}
+.ts-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  font-size: 17px;
-  line-height: 1.4;
+  font-size: 15px;
+  line-height: 1.35;
   text-wrap: pretty;
 }
-.note-sub {
-  color: var(--ink-faint);
-  font-size: 13px;
-  line-height: 18px;
-}
-/* Short cards drop the picture */
-@container (height <= 330px) {
-  .note-picture {
+/* Narrow cards drop the preview and put two talks per row */
+@container (width < 640px) {
+  .ix-preview {
     display: none;
   }
-  .note-body {
-    gap: 14px;
-    padding: 22px;
+  .ts-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -920,15 +975,15 @@ textarea.field {
   .peek a:hover {
     text-decoration-color: var(--ink-subtle);
   }
-  a.card.post:hover .note {
-    transform: scale(1.02);
-  }
 }
 @media (hover: hover) and (pointer: fine) {
   .peek a:hover + .peek-card {
     opacity: 1;
     transform: none;
     transition-delay: 0.12s;
+  }
+  .ts-item:hover .ts-thumb img {
+    transform: scale(1.03);
   }
   .prose a:hover,
   .article-foot a:hover,
@@ -992,8 +1047,8 @@ textarea.field {
     transform: none;
     transition: opacity 0.2s ease;
   }
-  a.card.post:hover .note {
-    transform: none;
+  .ts-thumb img {
+    transition: none;
   }
   .glass,
   .row.on .row-text {

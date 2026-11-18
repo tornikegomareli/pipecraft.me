@@ -1,6 +1,6 @@
 import { type CSSProperties, type ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { PostCard, WorkCard } from "../components/Cards";
+import { TalksStrip, WorkCard, WritingIndex } from "../components/Cards";
 import ContactModal from "../components/ContactModal";
 import Peek from "../components/Peek";
 import Rows from "../components/Rows";
@@ -129,12 +129,13 @@ export default function Home() {
       </div>,
     );
   }
-  if (all || filter === "/writing") {
-    for (const post of writing(posts))
-      cards.push(<PostCard key={`${post.section}/${post.slug}`} post={post} index={i++} />);
+  const articles = writing(posts);
+  if ((all || filter === "/writing") && articles.length) {
+    cards.push(<WritingIndex key="writing" posts={articles} index={i++} />);
   }
-  if (all || filter === "/talks") {
-    for (const talk of posts?.talks ?? []) cards.push(<PostCard key={`talks/${talk.slug}`} post={talk} index={i++} />);
+  const talks = posts?.talks ?? [];
+  if ((all || filter === "/talks") && talks.length) {
+    cards.push(<TalksStrip key="talks" talks={talks} index={i++} />);
   }
 
   return (

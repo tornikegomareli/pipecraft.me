@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useRef } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { type PostItem, formatMonthYear } from "../lib/posts";
 import type { Work } from "../lib/work";
@@ -51,6 +51,12 @@ const OUT = (
   </svg>
 );
 
+const PLAY = (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
+  </svg>
+);
+
 export function WorkCard({ work, index }: { work: Work; index: number }) {
   return (
     <a
@@ -74,40 +80,70 @@ export function WorkCard({ work, index }: { work: Work; index: number }) {
   );
 }
 
-const YOUTUBE = (
-  <svg className="source-icon" viewBox="0 0 24 24" aria-hidden="true">
-    <rect x="1" y="4" width="22" height="16" rx="5" fill="#ff0033" />
-    <path d="M10 8.5v7l6-3.5z" fill="#fff" />
-  </svg>
-);
+const picture = (p: PostItem) =>
+  p.section === "talks" ? `https://i.ytimg.com/vi_webp/${p.youtubeId}/maxresdefault.webp` : p.cover;
 
-// An article or a talk: a picture, where it lives, and its title
-export function PostCard({ post, index }: { post: PostItem; index: number }) {
-  const talk = post.section === "talks";
-  const picture = talk ? `https://i.ytimg.com/vi_webp/${post.youtubeId}/maxresdefault.webp` : post.cover;
+// Every article in one list. The hovered or focused one shows its picture beside the list.
+export function WritingIndex({ posts, index }: { posts: PostItem[]; index: number }) {
+  const [active, setActive] = useState(0);
+  const shown = posts[active];
+  const pic = shown && picture(shown);
   return (
-    <Link
-      to={`/${post.section}/${post.slug}`}
-      className="card post"
-      style={{ "--i": Math.min(index, 10) } as CSSProperties}
-    >
-      <span className="note">
-        {picture ? (
-          <img className="note-picture" src={picture} alt="" loading="lazy" referrerPolicy="no-referrer" />
-        ) : (
-          <span className="note-picture note-type">{post.spoiler ?? post.title}</span>
-        )}
-        <span className="note-body">
-          <span className="note-meta">
-            {talk ? YOUTUBE : <img className="source-icon" src="/media/avatar.png" alt="" />}
-            {talk ? "YouTube" : post.section === "essays" ? "Essay" : "Post"}
-            <time dateTime={post.date}>{formatMonthYear(post.date)}</time>
-          </span>
-          <span className="note-title">{post.title}</span>
-          {!talk && <span className="note-sub">{post.readingTime} min read</span>}
-        </span>
-      </span>
+    <div className="card full ix" style={{ "--i": Math.min(index, 10) } as CSSProperties}>
+      <div className="ix-list">
+        <p className="ix-head">Writing</p>
+        <ul>
+          {posts.map((p, i) => (
+            <li key={`${p.section}/${p.slug}`}>
+              <Link
+                to={`/${p.section}/${p.slug}`}
+                className={i === active ? "ix-row on" : "ix-row"}
+                onPointerEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+              >
+                <span className="ix-title">{p.title}</span>
+                <time className="ix-date" dateTime={p.date}>
+                  {formatMonthYear(p.date)}
+                </time>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="ix-preview" aria-hidden="true">
+        {shown &&
+          (pic ? (
+            <img src={pic} alt="" referrerPolicy="no-referrer" />
+          ) : (
+            <span className="ix-quote">{shown.spoiler ?? shown.title}</span>
+          ))}
+      </div>
       <span className="edge" />
-    </Link>
+    </div>
+  );
+}
+
+export function TalksStrip({ talks, index }: { talks: PostItem[]; index: number }) {
+  return (
+    <div className="card full ts" style={{ "--i": Math.min(index, 10) } as CSSProperties}>
+      <p className="ix-head">Talks</p>
+      <ul className="ts-row">
+        {talks.map((t) => (
+          <li key={t.slug}>
+            <Link to={`/talks/${t.slug}`} className="ts-item">
+              <span className="ts-thumb">
+                <img src={picture(t)} alt="" loading="lazy" />
+                <span className="ts-play">{PLAY}</span>
+              </span>
+              <span className="ts-title">{t.title}</span>
+              <time className="ts-date" dateTime={t.date}>
+                {formatMonthYear(t.date)}
+              </time>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <span className="edge" />
+    </div>
   );
 }

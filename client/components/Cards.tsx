@@ -59,10 +59,10 @@ export function WorkCard({ work, index }: { work: Work; index: number }) {
       rel="noreferrer"
       aria-label={`${work.name}: ${work.line}`}
       className={work.wide ? "card full" : "card"}
-      style={{ "--ratio": work.ratio, "--i": Math.min(index, 10) } as CSSProperties}
+      style={{ "--i": Math.min(index, 10), aspectRatio: work.shape } as CSSProperties}
     >
       <span className="stage">
-        <Loop name={work.media} className={work.portrait ? "reel portrait" : "reel"} />
+        <Loop name={work.media} className="reel" />
       </span>
       {VIDEO}
       <span className="name">{work.key === "drooop" ? <span className="drooop">drooop</span> : work.name}</span>

@@ -6,12 +6,10 @@ export interface Work {
   href: string;
   // A file name in /media: <media>.mp4 plays over its poster, <media>.webp
   media: string;
-  // Phone recordings stand upright in the card
-  portrait?: boolean;
-  // Width / height of the media when it is not 16 / 9
-  ratio?: string;
   // Wide cards take both columns
   wide?: boolean;
+  // Width / height of a wide card whose video is not 16 / 9
+  shape?: string;
 }
 
 export const WORK: Work[] = [
@@ -31,7 +29,6 @@ export const WORK: Work[] = [
     line: "A hidden second desktop for your agent.",
     href: "https://atlas.insanearts.io",
     media: "atlas",
-    ratio: "16 / 10",
     wide: true,
   },
   {
@@ -41,6 +38,7 @@ export const WORK: Work[] = [
     line: "Every command, one flick away.",
     href: "https://opies.io",
     media: "opie",
+    wide: true,
   },
   {
     key: "jolt",
@@ -49,6 +47,7 @@ export const WORK: Work[] = [
     line: "The Mac launcher that understands plain language.",
     href: "https://usejolt.app",
     media: "jolt",
+    wide: true,
   },
   {
     key: "talkify",
@@ -57,8 +56,8 @@ export const WORK: Work[] = [
     line: "Free, local voice dictation for the Mac.",
     href: "https://github.com/tornikegomareli/Talkify",
     media: "talkify",
-    ratio: "1326 / 546",
     wide: true,
+    shape: "1326 / 546",
   },
   {
     key: "scene",
@@ -76,6 +75,16 @@ export const WORK: Work[] = [
     line: "See what runs on every workspace.",
     href: "https://github.com/tornikegomareli/omarchy-spaces",
     media: "omarchy-spaces",
+    wide: true,
+  },
+  {
+    key: "herdrbar",
+    kind: "oss",
+    name: "Herdrbar",
+    line: "Your agents, in your menu bar.",
+    href: "https://github.com/InsaneArts/herdrbar",
+    media: "herdrbar",
+    wide: true,
   },
   {
     key: "spacewalk",
@@ -86,21 +95,11 @@ export const WORK: Work[] = [
     media: "spacewalk",
   },
   {
-    key: "herdrbar",
-    kind: "oss",
-    name: "Herdrbar",
-    line: "Your agents, in your menu bar.",
-    href: "https://github.com/InsaneArts/herdrbar",
-    media: "herdrbar",
-  },
-  {
     key: "aurora",
     kind: "oss",
     name: "Aurora",
     line: "The Apple Intelligence glow for SwiftUI.",
     href: "https://github.com/tornikegomareli/Aurora",
     media: "aurora",
-    ratio: "443 / 900",
-    portrait: true,
   },
 ];

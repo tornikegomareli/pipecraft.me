@@ -374,24 +374,17 @@ a.card:active {
   box-shadow: inset 0 0 0 1px var(--edge);
   pointer-events: none;
 }
-.stage {
+/* The video fills the card, edge to edge */
+.stage,
+.reel {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
 }
 .reel {
   display: block;
-  width: 86%;
-  aspect-ratio: var(--ratio, 16 / 9);
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 0 0 1px rgb(39 39 42 / 0.06), 0 12px 24px -6px rgb(39 39 42 / 0.12);
-}
-.reel.portrait {
-  width: auto;
-  height: 78%;
-  border-radius: 24px;
 }
 .kind {
   position: absolute;

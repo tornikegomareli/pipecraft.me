@@ -83,7 +83,7 @@ function Intro({ onContact }: { onContact: () => void }) {
             InsaneArts
           </Peek>
           , a small group of independent developers designing and engineering software for Apple platforms. We think
-          software should feel crafted and fun again. It shouldn't just work; it should feel like someone cared. Some of
+          software should feel crafted and fun again. It shouldn't just work. It should feel like someone cared. Some of
           the apps I've recently designed and built:{" "}
           <Peek href="https://drooop.app" icon="/media/icons/drooop.png" media="drooop">
             <span className="drooop">drooop</span>

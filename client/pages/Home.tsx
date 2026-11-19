@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { TalksStrip, WorkCard, WritingIndex } from "../components/Cards";
 import ContactModal from "../components/ContactModal";
@@ -33,8 +33,24 @@ interface Repo {
 const SHOWN = new Set(WORK.map((w) => w.href.toLowerCase()));
 
 function Intro({ onContact }: { onContact: () => void }) {
+  const side = useRef<HTMLElement>(null);
+
+  // If the intro is taller than the window, it scrolls with the page until its end shows, then stays
+  useEffect(() => {
+    const el = side.current;
+    if (!el) return;
+    const fit = () => el.style.setProperty("--top", `${Math.min(24, window.innerHeight - el.offsetHeight - 24)}px`);
+    const observer = new ResizeObserver(fit);
+    observer.observe(el);
+    window.addEventListener("resize", fit);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", fit);
+    };
+  }, []);
+
   return (
-    <header className="side">
+    <header ref={side} className="side">
       <div className="who rise">
         <img className="me" src="/media/me.jpg" width={62} height={62} alt="" />
         <div>

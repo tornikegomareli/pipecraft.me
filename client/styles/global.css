@@ -332,7 +332,7 @@ ul {
   .side {
     position: sticky;
     z-index: 3;
-    top: 24px;
+    top: var(--top, 24px);
   }
 }
 @media (max-width: 1179px) {

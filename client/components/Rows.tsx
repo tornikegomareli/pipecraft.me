@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 export interface Row {
   key: string;
   title: ReactNode;
-  sub?: string;
+  sub?: ReactNode;
+  icon?: string;
   to?: string;
   href?: string;
   onClick?: () => void;
@@ -102,6 +103,7 @@ export default function Rows({ rows }: { rows: Row[] }) {
           };
           const text = (
             <span className="row-text">
+              {r.icon && <img className="row-icon" src={r.icon} width={18} height={18} alt="" />}
               <span className="row-title">{r.title}</span>
               {r.sub && <span className="row-sub">{r.sub}</span>}
             </span>

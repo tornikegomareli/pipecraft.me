@@ -28,7 +28,26 @@ interface Repo {
   description: string | null;
   html_url: string;
   stargazers_count: number;
+  language: string | null;
 }
+
+// Each repo shows the logo of its language, or GitHub's when it has none
+const LANG = new Set(["Swift", "TypeScript", "Python"]);
+const langIcon = (language: string | null) =>
+  `/media/lang/${language && LANG.has(language) ? language.toLowerCase() : "github"}.svg`;
+
+const STAR = (
+  <svg className="star" viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M8 1.5l1.9 4 4.3.5-3.2 3 .9 4.3L8 11.1l-3.9 2.2.9-4.3-3.2-3 4.3-.5z" />
+  </svg>
+);
+
+// Emoji in repo descriptions compete with the icons
+const plain = (text: string) =>
+  text
+    .replace(/\p{Extended_Pictographic}|\p{Emoji_Modifier}|\u{FE0F}|\u{200D}/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
 
 const SHOWN = new Set(WORK.map((w) => w.href.toLowerCase()));
 
@@ -166,10 +185,24 @@ export default function Home() {
             ...more.map((r) => ({
               key: r.name,
               title: r.name,
-              sub: [`${r.stargazers_count.toLocaleString("en-US")} stars`, r.description].filter(Boolean).join(" · "),
+              sub: (
+                <>
+                  <span className="stars">
+                    {STAR}
+                    {r.stargazers_count.toLocaleString("en-US")}
+                  </span>
+                  {r.description && ` · ${plain(r.description)}`}
+                </>
+              ),
+              icon: langIcon(r.language),
               href: r.html_url,
             })),
-            { key: "all", title: "Everything on GitHub", href: "https://github.com/tornikegomareli?tab=repositories" },
+            {
+              key: "all",
+              title: "Everything on GitHub",
+              icon: langIcon(null),
+              href: "https://github.com/tornikegomareli?tab=repositories",
+            },
           ]}
         />
       </div>,

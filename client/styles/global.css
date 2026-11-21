@@ -576,8 +576,37 @@ a.card:active {
 .card.list .row-sub {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   overflow: hidden;
+}
+/* A row with an icon: the icon on the left, its title and line beside it */
+.row-text:has(.row-icon) {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 12px;
+}
+.row-icon {
+  grid-row: span 2;
+  width: 36px;
+  height: 36px;
+  padding: 9px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--edge);
+}
+.row-text:has(.row-icon) > :not(.row-icon) {
+  grid-column: 2;
+}
+.stars {
+  font-variant-numeric: tabular-nums;
+}
+.star {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  vertical-align: -1px;
+  fill: currentColor;
 }
 
 @media (max-width: 640px) {
